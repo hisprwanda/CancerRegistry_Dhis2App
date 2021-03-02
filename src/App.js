@@ -1,32 +1,86 @@
-import { DataQuery } from '@dhis2/app-runtime'
-import i18n from '@dhis2/d2-i18n'
+import './App.css'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import React from 'react'
-import { Switch } from 'react-router-dom'
-import classes from './App.module.css'
-import Navbar from './components/Navbar'
-import { BrowserRouter as Router,Route} from 'react-router-dom'
-import Home from './pages/Home'
-import Products from './pages/Products'
-import Reports from './pages/Reports'
 
-function MyApp() {
-    return(
-<>
-<Router>
+import { Home, Patient, Tumour, Source, DataFilter, Reports, NoMatch } from './pages'
+import { Navigation } from './navigation'
+import styles from './App.module.css'
 
-<Navbar />
 
-<Switch>
+const MyApp = () => (
+    <BrowserRouter
+    // This Router will use the browser history.
+    // If older browsers need to be supported,
+    // then the `HashRouter` can be used
+    // For more information, check out the docs:
+    // https://reacttraining.com/react-router/web/guides/quick-start
+    >
+        <div className={styles.container}>
+            <div className={styles.left}>
+                <Navigation
+                // This component has to be inside the `BrowserRouter`
+                // because it will use the router's information
+                // (It will access the react context through hooks)
+                />
+            </div>
 
-<Route path="/" exact component={Home}/>
-<Route path="/products" component={Products}/>
-<Route path="/reports" component={Reports}/>
+            <div className={styles.right}>
+                <Switch
+                // will ensure that only the first route,
+                // that matches the url, will be rendered
+                // otherwise the 404 page would be rendered everytime
+                >
+                    <Route
+                        // Home route, will render "Home" component
+                        // when "/" is the current url
+                        exact
+                        path="/"
+                        component={Home}
+                    />
+                    
+                    <Route
+                        // Attributes route, will render "Attributes" component
+                        // when "/attributes" is the current url
+                        path="/patient"
+                        component={Patient}
+                    />
 
-</Switch>
+                    <Route
+                        // Attributes route, will render "Attributes" component
+                        // when "/attributes" is the current url
+                        path="/tumour"
+                        component={Tumour}
+                    />
 
-</Router>
-    
-</>
-    );
-}
+                    <Route
+                        // Attributes route, will render "Attributes" component
+                        // when "/attributes" is the current url
+                        path="/source"
+                        component={Source}
+                    />
+
+                    <Route
+                        // FAQ route, will render "Form" component
+                        // when "/faq" is the current url
+                        path="/dataFilter"
+                        component={DataFilter}
+                    />
+                    <Route
+                        // FAQ route, will render "Form" component
+                        // when "/faq" is the current url
+                        path="/reports"
+                        component={Reports}
+                    />
+
+                    <Route
+                        // 404 page
+                        // The `NoMatch` component will redirect to "/"
+                        component={NoMatch}
+                    />
+                </Switch>
+            </div>
+        </div>
+    </BrowserRouter>
+)
+
 export default MyApp

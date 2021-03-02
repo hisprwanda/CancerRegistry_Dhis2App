@@ -1,11 +1,10 @@
 import React from 'react'
 
-function Home() {
-    return (
-        <div className='home'>
-            <h1>Home new..</h1>
-        </div>
-    )
-}
+export const Home = () => (
+    <div>
+        <h1>Home</h1>
 
-export default Home
+        <h3>Cancer Registry - Home page</h3>
+        <p>Use the left menu to view, filter and export data to <strong>CanReg5</strong></p>
+    </div>
+)

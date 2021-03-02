@@ -13,3 +13,20 @@
     justify-content: center;
     font-size: 3rem;
 }
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.left {
+    width: 200px;
+    min-height: 100vh;
+    padding-top: 20px;
+}
+
+.right {
+    flex-grow: 1;
+    min-height: 100vh;
+    padding: 26px 16px 0;
+    background: #f0f0f0;
+}

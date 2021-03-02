@@ -1,5 +1,5 @@
 {
-    "name": "canregdhisapp",
+    "name": "Cancer-Registry",
     "version": "1.0.0",
     "description": "",
     "license": "BSD-3-Clause",
@@ -8,9 +8,7 @@
         "build": "d2-app-scripts build",
         "start": "d2-app-scripts start",
         "test": "d2-app-scripts test",
-        "deploy": "d2-app-scripts deploy",
-        "lint": "d2-style js check && d2-style text check",
-        "format": "d2-style js apply && d2-style text apply"
+        "deploy": "d2-app-scripts deploy"
     },
     "devDependencies": {
         "@dhis2/cli-app-scripts": "^5.7.0",
@@ -19,6 +17,8 @@
     "dependencies": {
         "@dhis2/app-runtime": "^2.7.0",
         "react-icons": "^4.2.0",
-        "react-router-dom": "^5.2.0"
+        "react-router-dom": "^5.2.0",
+        "@dhis2/prop-types": "^2.0.0",
+        "@dhis2/ui": "^5.0.3"
     }
 }
