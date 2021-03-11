@@ -2,7 +2,7 @@ import './App.css'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import React from 'react'
 
-import { Home, Patient, Tumour, Source, DataFilter, Reports, NoMatch } from './pages'
+import { Home, Patient, Tumour, Source, DataFilter, TrackedEntityInstances, Reports, NoMatch } from './pages'
 import { Navigation } from './navigation'
 import styles from './App.module.css'
 
@@ -41,6 +41,7 @@ const MyApp = () => (
                     <Route
                         // Attributes route, will render "Attributes" component
                         // when "/attributes" is the current url
+                        exact
                         path="/patient"
                         component={Patient}
                     />
@@ -48,6 +49,7 @@ const MyApp = () => (
                     <Route
                         // Attributes route, will render "Attributes" component
                         // when "/attributes" is the current url
+                        exact
                         path="/tumour"
                         component={Tumour}
                     />
@@ -55,6 +57,7 @@ const MyApp = () => (
                     <Route
                         // Attributes route, will render "Attributes" component
                         // when "/attributes" is the current url
+                        exact
                         path="/source"
                         component={Source}
                     />
@@ -62,15 +65,27 @@ const MyApp = () => (
                     <Route
                         // FAQ route, will render "Form" component
                         // when "/faq" is the current url
+                        exact
                         path="/dataFilter"
                         component={DataFilter}
                     />
                     <Route
                         // FAQ route, will render "Form" component
                         // when "/faq" is the current url
+                        exact
+                        path="/trackedEntityInstances"
+                        component={TrackedEntityInstances}
+                    />
+
+<Route
+                        // FAQ route, will render "Form" component
+                        // when "/faq" is the current url
+                        exact
                         path="/reports"
                         component={Reports}
                     />
+
+
 
                     <Route
                         // 404 page
