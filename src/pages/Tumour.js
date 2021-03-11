@@ -45,8 +45,14 @@ export const Tumour = () => {
   return (
     <div>
       <h1>Tumour Data for Export</h1>
-      <div className={styles.row}>
-          <Button primary type="submit">
+      <div className={styles.row}
+        style={{
+            border: '1px solid #c4c9cc',
+            padding: 8,
+            width: '100%'
+        }}
+      >
+          <Button primary type="submit" end>
               Export Tumour Data
           </Button>
       </div>
