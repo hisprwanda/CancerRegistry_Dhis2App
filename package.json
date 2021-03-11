@@ -18,7 +18,10 @@
         "@dhis2/app-runtime": "^2.7.0",
         "@dhis2/prop-types": "^2.0.0",
         "@dhis2/ui": "^5.0.3",
+        "axios": "^0.21.1",
+        "bootstrap": "^4.6.0",
         "react-csv": "^2.0.3",
+        "react-csv-downloader": "^2.2.0",
         "react-icons": "^4.2.0",
         "react-router-dom": "^5.2.0"
     }
