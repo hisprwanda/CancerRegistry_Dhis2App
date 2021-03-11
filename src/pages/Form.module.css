@@ -8,6 +8,14 @@
 
 .title {
     width: 150px;
+  
+}
+.cbx {
+  color: DodgerBlue;
+  padding: 10px;
+  font-family: Arial;
+  text-align: center;
+  width: 150px; 
 }
 
 .surname {

@@ -2,7 +2,8 @@ import './App.css'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import React from 'react'
 
-import { Home, Patient, Tumour, Source, DataFilter, Reports, NoMatch } from './pages'
+import { Home, Tumour, Source, DataFilter, Reports, NoMatch } from './pages'
+import Patient from './pages/Patient'
 import { Navigation } from './navigation'
 import styles from './App.module.css'
 
