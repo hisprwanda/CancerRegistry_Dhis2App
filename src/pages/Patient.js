@@ -24,12 +24,8 @@ import {
   import { ReactFinalForm } from '@dhis2/ui'
 
  
-  var data=[
-    {firstName: "Pascal",lastName: "NDAYIZIGIYE", email: "pazzosgmail.com", age: "30"},
-    {firstName: "Pascal",lastName: "NDAYIZIGIYE", email: "pazzosgmail.com", age: "30"},
-    {firstName: "Pascal",lastName: "NDAYIZIGIYE", email: "pazzosgmail.com", age: "30"}
-      ]
-    
+  var data=[]
+  
     var headers=[
       {label: 'First Name', key:'firstName'},
       {label: 'Last Name', key:'lastName'},
@@ -74,6 +70,7 @@ constructor(){
   super();
     this.state={
       items:[],
+      mydatas:[],
       orgs:[],
       isLoaded: false,
       selectValue:0,
@@ -104,6 +101,8 @@ myFunc= (event) =>{
     )
    
   })
+
+ 
 }
 
 myChangeHandler = (event) => {
@@ -141,7 +140,8 @@ exportexcel = (event) => {
    
   }) 
 
-  
+ 
+      
    
  }
 
@@ -166,6 +166,21 @@ villagfilter= (event) =>{
   let nam = event.target.name;
   let val = event.target.value;
     this.setState({[nam]: val});
+
+    axios.get('https://dev.hisprwanda.org/oncology/api/trackedEntityInstances.json?ou='+this.state.villselected+'&ouMode=DESCENDANTS&pageSize=5&fields=attributes[attribute,value]&program=rx6V962E4XM',{auth:{username:"pndayizigiye",password:"Pascal@1234"}})
+    .then(res =>{
+      console.log(res.data.trackedEntityInstances)
+      this.setState(
+        {
+          isLoaded: true,
+          mydatas:res.data.trackedEntityInstances,
+        }
+      )
+     
+    }) 
+
+    var datss={firstName: "Pascaltest",lastName: "NDAYIZIGIYE", email: "pazzosgmail.com", age: "30"}
+    data.push(datss);
  
 }
 
