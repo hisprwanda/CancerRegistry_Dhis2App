@@ -51,6 +51,10 @@ export const Navigation = () => (
             path= "/source"
         />
         <NavigationItem
+            label= "TrackedEntityInstances"
+            path= "/trackedEntityInstances"
+        />
+        <NavigationItem
             // Menu item for the FAQ page
             label="Data Filter"
             path="/dataFilter"

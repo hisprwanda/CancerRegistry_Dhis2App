@@ -8,7 +8,7 @@ import {
   TableRow,
   TableRowHead
 } from "@dhis2/ui";
-import { useDataQuery } from "@dhis2/app-runtime";
+import { useDataQuery, useConfig } from "@dhis2/app-runtime";
 import React from "react";
 import styles from './Form.module.css'
 
@@ -41,10 +41,12 @@ export const Tumour = () => {
   // * data will be an object once loading is done with the following path
   //   data.attributes.attributes <- That's an array of objects
   const { loading, error, data } = useDataQuery(ATTRIBUTES_QUERY);
+  const { baseUrl, apiVersion } = useConfig();
 
   return (
     <div>
       <h1>Tumour Data for Export</h1>
+      <h1>Url: {baseUrl} and API: {apiVersion}</h1>
       <div className={styles.row}
         style={{
             border: '1px solid #c4c9cc',
