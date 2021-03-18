@@ -22,24 +22,21 @@ import {
   } from "@dhis2/ui";
   import styles from './Form.module.css'
   import { ReactFinalForm } from '@dhis2/ui'
+import ReactPaginate from 'react-paginate';
 
  
-  var data=[
-    {firstName: "Pascal",lastName: "NDAYIZIGIYE", email: "pazzosgmail.com", age: "30"},
-    {firstName: "Pascal",lastName: "NDAYIZIGIYE", email: "pazzosgmail.com", age: "30"},
-    {firstName: "Pascal",lastName: "NDAYIZIGIYE", email: "pazzosgmail.com", age: "30"}
-      ]
-    
+  var data=[]
+  
     var headers=[
       {label: 'First Name', key:'firstName'},
       {label: 'Last Name', key:'lastName'},
-      {label: 'Email', key:'email'},
-      {label: 'Age', key:'age'}
+      {label: 'Phone', key:'phone'},
+      {label: 'Date', key:'date'}
     ]
    
 
     var csvReport={
-      filename:'Report.csv',
+      filename:'Report.txt',
       headers: headers,
       data:data
     
@@ -74,6 +71,7 @@ constructor(){
   super();
     this.state={
       items:[],
+      mydatas:[],
       orgs:[],
       isLoaded: false,
       selectValue:0,
@@ -86,8 +84,47 @@ constructor(){
       sectselected: '',
       celselected: '',
       villselected: '',
+      offset:0,
+      tableData:[],
+      orgtableData:[],
+      perPage:10,
+      currentPage:0,
+     
     }
+    this.handlePageClick = this.handlePageClick.bind(this);
 }
+
+
+
+handlePageClick = (e) => {
+  const selectedPage = e.selected;
+  const offset = selectedPage * this.state.perPage;
+
+  this.setState({
+      currentPage: selectedPage,
+      offset: offset
+  }, () => {
+      this.loadMoreData()
+  });
+
+};
+
+loadMoreData() {
+const data = this.state.orgtableData;
+
+const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+this.setState({
+pageCount: Math.ceil(data.length / this.state.perPage),
+items:slice
+})
+
+}
+
+
+
+
+
+
 myFunc= (event) =>{
   
   let nam = event.target.name;
@@ -104,6 +141,8 @@ myFunc= (event) =>{
     )
    
   })
+
+ 
 }
 
 myChangeHandler = (event) => {
@@ -141,7 +180,8 @@ exportexcel = (event) => {
    
   }) 
 
-  
+ 
+      
    
  }
 
@@ -166,6 +206,58 @@ villagfilter= (event) =>{
   let nam = event.target.name;
   let val = event.target.value;
     this.setState({[nam]: val});
+
+    axios.get('https://dev.hisprwanda.org/oncology/api/trackedEntityInstances.json?ou='+this.state.villselected+'&ouMode=DESCENDANTS&pageSize=5&fields=attributes[attribute,value]&program=rx6V962E4XM',{auth:{username:"pndayizigiye",password:"Pascal@1234"}})
+    .then(res =>{
+    
+      this.setState(
+        {
+          isLoaded: true,
+          mydatas:res.data.trackedEntityInstances,
+        }
+      )
+     
+    }) 
+
+      var afname="";
+      var lname=""
+      var emails="";
+      var age=""
+    this.state.mydatas.map(function(itemp, i){
+      itemp.attributes.map(function(itm, i){
+       
+        if(itm.attribute=="mJ3oYSkDyWz")
+        {
+          afname=itm.value;
+        }
+
+        if(itm.attribute=="Uda5alDG8P5")
+        {
+          lname=itm.value;
+        }
+        if(itm.attribute=="dd98c7o6RjZ")
+        {
+          emails=itm.value;
+        }
+        if(itm.attribute=="m1At2P4UT9e")
+        {
+          age=itm.value;
+        }
+      
+      })
+     var datss={firstName: afname,lastName: lname, phone: emails, date: age}
+    data.push(datss);
+    })
+
+
+
+
+    //var afname="Pascaltest";
+
+
+    //var datss={firstName: ap,lastName: "NDAYIZIGIYE", email: "pazzosgmail.com", age: "30"}
+    //data.push(datss);
+   
  
 }
 
@@ -208,13 +300,19 @@ villagefilter= (event) =>{
   })
 }
   componentDidMount(){
-    axios.get('https://dev.hisprwanda.org/oncology/api/trackedEntityInstances.json?ou=Hjw70Lodtf2&ouMode=DESCENDANTS&pageSize=5&fields=attributes[attribute,value]&program=rx6V962E4XM',{auth:{username:"pndayizigiye",password:"Pascal@1234"}})
+
+
+    axios.get('https://dev.hisprwanda.org/oncology/api/trackedEntityInstances.json?ou=Hjw70Lodtf2&ouMode=DESCENDANTS&pageSize=30&fields=attributes[attribute,value]&program=rx6V962E4XM',{auth:{username:"pndayizigiye",password:"Pascal@1234"}})
     .then(res =>{
-      console.log(res.data.trackedEntityInstances)
+      const datap=res.data.trackedEntityInstances;
+      const slice=datap.slice(this.state.offset,this.state.offset+this.state.perPage)
       this.setState(
         {
           isLoaded: true,
-          items:res.data.trackedEntityInstances,
+          items:slice,
+          pageCount:Math.ceil(datap.length/this.state.perPage),
+          orgtableData:res.data.trackedEntityInstances,
+          tableData:slice
         }
       )
      
@@ -411,7 +509,18 @@ villagefilter= (event) =>{
 
    
     
-    
+ <ReactPaginate
+                    previousLabel={"prev"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={this.state.pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}/>
     
     
   </TableBody>
