@@ -46,7 +46,7 @@ export const Tumour = () => {
   return (
     <div>
       <h1>Tumour Data for Export</h1>
-      <h1>Url: {baseUrl} and API: {apiVersion}</h1>
+      {/* <h1>Url: {baseUrl} and API: {apiVersion}</h1> */}
       <div className={styles.row}
         style={{
             border: '1px solid #c4c9cc',
