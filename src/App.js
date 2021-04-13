@@ -1,7 +1,7 @@
 import './App.css'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import React from 'react'
-import { Home, Tumour, Source, DataFilter, TrackedEntityInstances, Reports, NoMatch } from './pages'
+import { Home, Tumour, Source, DataFilter, Reports, NoMatch } from './pages'
 import Patient from './pages/Patient'
 import { Navigation } from './navigation'
 import styles from './App.module.css'
@@ -68,13 +68,6 @@ const MyApp = () => (
                         exact
                         path="/dataFilter"
                         component={DataFilter}
-                    />
-                    <Route
-                        // FAQ route, will render "Form" component
-                        // when "/faq" is the current url
-                        exact
-                        path="/trackedEntityInstances"
-                        component={TrackedEntityInstances}
                     />
 
 <Route
