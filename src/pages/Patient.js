@@ -28,15 +28,21 @@ import ReactPaginate from 'react-paginate';
   var data=[]
   
     var headers=[
-      {label: 'First Name', key:'firstName'},
-      {label: 'Last Name', key:'lastName'},
-      {label: 'Phone', key:'phone'},
+      {label: 'REGNO', key:'regno'},
+      {label: 'PERS', key:'pers'},
+      {label: 'IDENTITYCARD', key:'idnum'},
+      {label: 'SURNAME', key:'firstName'},
+      {label: 'FIRSTN', key:'lastName'},
+      {label: 'SEX', key:'gender'},
+      {label: 'BIRTHD', key:'bd'},
+      {label: 'PHONE1', key:'phone'},
+      {label: 'PHONEN2', key:'phone1'},
       {label: 'Date', key:'date'}
     ]
    
 
     var csvReport={
-      filename:'Report.txt',
+      filename:'Report.csv',
       headers: headers,
       data:data
     
@@ -166,11 +172,11 @@ myChangeHandler = (event) => {
 
 exportexcel = (event) => {
 
-
+  console.log(this.state.mydatas);
  
   axios.get('https://dev.hisprwanda.org/oncology/api/trackedEntityInstances.json?ou='+this.state.villselected+'&ouMode=DESCENDANTS&pageSize=5&fields=attributes[attribute,value]&program=rx6V962E4XM',{auth:{username:"pndayizigiye",password:"Pascal@1234"}})
   .then(res =>{
-    console.log(res.data.trackedEntityInstances)
+    //console.log(res.data.trackedEntityInstances)
     this.setState(
       {
         isLoaded: true,
@@ -178,9 +184,169 @@ exportexcel = (event) => {
       }
     )
    
-  }) 
+  })
+  
+  var contacts = "REGNO"+"\t"+"PERS"+"\t"+"IDENTITYCARD"+"\t"
+  +"SURNAME"+"\t"+"FIRSTN"+"\t"+"SEX"+"\t"+"BIRTHD"+"\t"+"PHONE1"
+  +"\t"+"PHONEN2"+"\t"+"NKNAME"+"\t"+"TNNK"+"\t"+"NATIONALITY"
+  +"\t"+"DLC"+"\t"+"STATUS"+"\t"+"ONCOPR"
+  +"\t"+"IFALIVE"+"\t"+"PROGRESSION"+"\t"+"CAUSEDEATH"+"\t"+"PLACED"+"\t"+"OCD"+"\t"+"OBSOLETEFLAGPATIENTTABLE"+
+  "\t"+"PATIENTRECORDID"+"\t"+"PATIENTUPDATEDBY"+"\t"+"PATIENTUPDATEDATE"+"\t"+"PATIENTRECORDSTATUS"+
+  "\t"+"PATIENTCHECKSTATUS"+"\t"+"REMARKS";
 
- 
+  
+
+  console.log(this.state.mydatas)
+  var aregno="";
+  var afname="";
+  var lname=""
+  var emails="";
+  var age="";
+  var idnums="";
+  var genders="";
+  var bds="";
+  var mdates="";
+  var phn="";
+  var phn1="";
+  var nkin="";
+  var natn="";
+  
+this.state.mydatas.map(function(itemp, i){
+  itemp.enrollments.map(function(enrolmnt, i){
+    enrolmnt.events.map(function(evts, i){
+console.log("events");
+    })
+  })
+
+  itemp.attributes.map(function(itm, i){
+    
+    if(itm.attribute=="Yp8W95xlxMv")
+    {
+      natn=itm.value;
+    
+    }
+    if(itm.attribute=="iUkIkQbkxI1")
+    {
+      phn=itm.value;
+    
+    }
+    if(itm.attribute=="YfjjdE6XOBu")
+    {
+      nkin=itm.value;
+    
+    }
+    if(itm.attribute=="dd98c7o6RjZ")
+    {
+      phn1=itm.value;
+    
+    }
+    
+    
+    
+    
+    
+    if(itm.attribute=="PTGSZmTk3IQ")
+    {
+      aregno=itm.value;
+      var strFirstThree = aregno.substring(0,2);
+      if(strFirstThree=="20")
+      {
+        aregno=aregno.substring(2,9); 
+      }
+      if(strFirstThree=="CR")
+      {
+        var n1=aregno.substring(4,8);
+        var n2=aregno.substring(9,13);
+        aregno=n1+n2; 
+      }
+    }
+
+    if(itm.attribute=="m1At2P4UT9e")
+    {
+      mdates=itm.value;
+      var pyear=mdates.substring(0,4);
+      var pmonth=mdates.substring(5,7);
+      var pdate=mdates.substring(8,10);
+      bds=pyear+pmonth+pdate;
+
+    }
+    if(itm.attribute=="l93yUywzP20")
+    {
+      genders=itm.value;
+      if(genders=="Male")
+      {
+        genders="1"
+      }
+      else if(genders=="Female")
+      {
+        genders=="2"
+      }
+     else{
+      genders="1"
+     }
+    }
+    
+    if(itm.attribute=="LbuO5oeODsy")
+    {
+      idnums=itm.value;
+      idnums=idnums;
+    }
+    if(itm.attribute=="mJ3oYSkDyWz")
+    {
+      afname=itm.value;
+    }
+
+    if(itm.attribute=="Uda5alDG8P5")
+    {
+      lname=itm.value;
+    }
+    if(itm.attribute=="dd98c7o6RjZ")
+    {
+      emails=itm.value;
+    }
+    if(itm.attribute=="m1At2P4UT9e")
+    {
+      age=itm.value;
+    }
+  
+  })
+  var prss="0";
+  var tnnk="-1";
+  var stus="1";
+  var oncopr="1";
+  var ifall="1";
+  var progress="9";
+  var csdeath="";
+  var placd="";
+  var ocd="";
+  var obsplaq="0";
+  var patrecid=aregno+"01";
+  var recby="Winny";
+  var patrecstatus="0";
+  var checkstatus="0";
+  var remark="";
+  var fullstring=aregno+"\t"+prss+"\t"+idnums+"\t"+afname+"\t"+lname+"\t"+genders+
+  "\t"+bds+"\t"+phn+"\t"+phn1+"\t"+nkin+"\t"+tnnk+
+  "\t"+natn+"\t"+bds+"\t"+stus+"\t"+
+  oncopr+"\t"+ifall+"\t"+progress+"\t"+csdeath+"\t"+placd+"\t"+ocd+"\t"+obsplaq+"\t"+patrecid+
+  "\t"+recby+"\t"+bds+"\t"+patrecstatus+"\t"+checkstatus+"\t"+remark;
+    
+         contacts=contacts+'\n'+fullstring;
+
+})
+
+
+if(!(aregno==""))
+{
+const element = document.createElement("a");
+const file = new Blob([contacts], {type: 'text/plain;charset=utf-8'});
+element.href = URL.createObjectURL(file);
+element.download = "myFile.txt";
+document.body.appendChild(element); // Required for this to work in FireFox
+element.click();
+
+}
+
       
    
  }
@@ -200,16 +366,29 @@ sectorfilter= (event) =>{
     )
    
   })
+
+ 
+
+
+
+
+
+
 }
 
 villagfilter= (event) =>{
   let nam = event.target.name;
   let val = event.target.value;
+ 
+  
+console.log(event.target.value)
+
+
     this.setState({[nam]: val});
 
-    axios.get('https://dev.hisprwanda.org/oncology/api/trackedEntityInstances.json?ou='+this.state.villselected+'&ouMode=DESCENDANTS&pageSize=5&fields=attributes[attribute,value]&program=rx6V962E4XM',{auth:{username:"pndayizigiye",password:"Pascal@1234"}})
+    axios.get('https://dev.hisprwanda.org/oncology/api/trackedEntityInstances.json?ou='+event.target.value+'&ouMode=DESCENDANTS&pageSize=5&fields=attributes[attribute,value],enrollments[events]&program=rx6V962E4XM',{auth:{username:"pndayizigiye",password:"Pascal@1234"}})
     .then(res =>{
-    
+      
       this.setState(
         {
           isLoaded: true,
@@ -217,40 +396,9 @@ villagfilter= (event) =>{
         }
       )
      
-    }) 
-
-      var afname="";
-      var lname=""
-      var emails="";
-      var age=""
-    this.state.mydatas.map(function(itemp, i){
-      itemp.attributes.map(function(itm, i){
-       
-        if(itm.attribute=="mJ3oYSkDyWz")
-        {
-          afname=itm.value;
-        }
-
-        if(itm.attribute=="Uda5alDG8P5")
-        {
-          lname=itm.value;
-        }
-        if(itm.attribute=="dd98c7o6RjZ")
-        {
-          emails=itm.value;
-        }
-        if(itm.attribute=="m1At2P4UT9e")
-        {
-          age=itm.value;
-        }
-      
-      })
-     var datss={firstName: afname,lastName: lname, phone: emails, date: age}
-    data.push(datss);
     })
-
-
-
+    
+   console.log(this.state.mydatas);
 
     //var afname="Pascaltest";
 
@@ -418,8 +566,8 @@ villagefilter= (event) =>{
           </TableCellHead>
           <TableCellHead>
           <div className={styles.row}>
-                <Button primary type="button" onClick={this.exportexcel} >
-                  <CSVLink {...csvReport}> Download</CSVLink> 
+                <Button primary  onClick={this.exportexcel} >
+                   Download
                 </Button>
             </div>
           </TableCellHead>
@@ -491,7 +639,7 @@ villagefilter= (event) =>{
 {item.attributes.map((attr, index) =><p>{attr.attribute=="PTGSZmTk3IQ"?attr.value:""}</p>)}
 </TableCell>
 <TableCell>
-{item.attributes.map((attr, index) =><p>{attr.attribute=="pnXiH7HdfGx"?attr.value:""}</p>)}
+{item.attributes.map((attr, index) =><p>{attr.attribute=="m1At2P4UT9e"?attr.value:""}</p>)}
 </TableCell>
 <TableCell>
     Incomplete
