@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { useDataQuery } from '@dhis2/app-runtime'
 import { CircularLoader } from '@dhis2/ui'
 
-import { TumourTableView } from './Tumour/TumourTableView'
-import { PaginationControls } from './Tumour/PaginationControls'
+import { TumourTableView } from './TumourComponents/TumourTableView'
+import { PaginationControls } from './TumourComponents/PaginationControls'
 
 import * as classes from '../App.module.css'
 
