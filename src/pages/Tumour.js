@@ -1,16 +1,12 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import { CircularLoader } from '@dhis2/ui'
-<<<<<<< HEAD
 import React, { useState } from 'react'
-=======
 
 import { TumourTableView } from './TumourComponents/TumourTableView'
 import { PaginationControls } from './TumourComponents/PaginationControls'
 
->>>>>>> b709c33a924866bcdd6f536424d742235905dba1
 import * as classes from '../App.module.css'
-import { PaginationControls } from './Tumour/PaginationControls'
-import { TumourTableView } from './Tumour/TumourTableView'
+
 
 const eventsQuery = {
     results: {
@@ -20,7 +16,7 @@ const eventsQuery = {
             orgUnit: 'OujzhM1lgN5',
             programStage: 'Y0cWLBEdXzb',
             pageSize: 5,
-            fields: ['dataValues'],
+            fields: ['dataValues[dataElement,value]'],
             startDate: '2020-04-13',
             endDate: '2021-04-13',
         }),
