@@ -1,10 +1,9 @@
-import { Menu, MenuItem } from '@dhis2/ui'
-
-import { useHistory, useRouteMatch } from 'react-router-dom'
 import { PropTypes } from '@dhis2/prop-types'
+import { Menu, MenuItem } from '@dhis2/ui'
 import React from 'react'
+import { useHistory, useRouteMatch } from 'react-router-dom'
 
-import '../components/Navbar.css';
+import '../components/Navbar.css'
 
 const NavigationItem = ({ path, label }) => {
     // browser history object
@@ -46,20 +45,13 @@ export const Navigation = () => (
             path="/patient"
         />
 
-        <NavigationItem
-            label= "Source"
-            path= "/source"
-        />
+        <NavigationItem label="Source" path="/source" />
         <NavigationItem
             // Menu item for the FAQ page
             label="Data Filter"
             path="/dataFilter"
         />
 
-        <NavigationItem
-            label= "Reports"
-            path= "/reports"
-        />
-        
+        <NavigationItem label="Reports" path="/reports" />
     </Menu>
 )

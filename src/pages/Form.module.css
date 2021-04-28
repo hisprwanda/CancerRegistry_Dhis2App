@@ -30,4 +30,16 @@
 .email {
     flex-grow: 1;
 }
+.leftmargin {
+    text-align: center;
+    margin-left: 280px;
+}
+.leftmarginsecond {
+    text-align: center;
+    margin-left: 130px;
+}
+.leftcell {
+    text-align: center;
+   
+}
 

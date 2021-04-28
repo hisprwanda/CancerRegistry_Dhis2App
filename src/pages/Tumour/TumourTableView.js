@@ -11,10 +11,10 @@ import {
   TableRowHead,
 } from "@dhis2/ui";
 import React from "react";
-import { DeleteTumourEventBtn } from './DeleteTumourEventBtn'
-import { NewTumourEventBtn } from "./NewTumourEventBtn";
 import { CSVLink } from "react-csv";
 import styles from '../Form.module.css'
+import { DeleteTumourEventBtn } from './DeleteTumourEventBtn'
+import { NewTumourEventBtn } from "./NewTumourEventBtn";
 
 
 const csv_props = {

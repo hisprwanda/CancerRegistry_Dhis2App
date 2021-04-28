@@ -82,7 +82,7 @@ export const DataFilter = () => (
                             label="More info"
                             component={InputFieldFF}
                             className={styles.email}
-                            validate={ hasValue }
+                            validate={hasValue}
                         />
                     </div>
 

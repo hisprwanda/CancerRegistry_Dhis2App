@@ -1,11 +1,10 @@
 import './App.css'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import React from 'react'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import styles from './App.module.css'
+import { Navigation } from './navigation'
 import { Home, Tumour, Source, DataFilter, Reports, NoMatch } from './pages'
 import Patient from './pages/Patient'
-import { Navigation } from './navigation'
-import styles from './App.module.css'
-
 
 const MyApp = () => (
     <BrowserRouter
@@ -37,7 +36,7 @@ const MyApp = () => (
                         path="/"
                         component={Home}
                     />
-                    
+
                     <Route
                         // Attributes route, will render "Attributes" component
                         // when "/attributes" is the current url
@@ -70,15 +69,13 @@ const MyApp = () => (
                         component={DataFilter}
                     />
 
-<Route
+                    <Route
                         // FAQ route, will render "Form" component
                         // when "/faq" is the current url
                         exact
                         path="/reports"
                         component={Reports}
                     />
-
-
 
                     <Route
                         // 404 page

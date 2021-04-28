@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
 import { useDataQuery } from '@dhis2/app-runtime'
 import { CircularLoader } from '@dhis2/ui'
-
-import { TumourTableView } from './Tumour/TumourTableView'
-import { PaginationControls } from './Tumour/PaginationControls'
-
+import React, { useState } from 'react'
 import * as classes from '../App.module.css'
+import { PaginationControls } from './Tumour/PaginationControls'
+import { TumourTableView } from './Tumour/TumourTableView'
 
 const eventsQuery = {
     results: {
