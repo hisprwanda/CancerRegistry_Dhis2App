@@ -14,6 +14,7 @@ const eventsQuery = {
         params: ({ page }) => ({
             page: page,
             orgUnit: 'OujzhM1lgN5',
+            program: 'rx6V962E4XM',
             programStage: 'Y0cWLBEdXzb',
             pageSize: 5,
             fields: ['dataValues[dataElement,value]'],
