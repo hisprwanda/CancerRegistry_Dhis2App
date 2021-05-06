@@ -18,7 +18,7 @@ const eventsQuery = {
             program: 'rx6V962E4XM',
             programStage: 'Y0cWLBEdXzb',
             pageSize: 5,
-            fields: ['dataValues[dataElement,value]'],
+            fields: ['completedBy,dataValues[dataElement,value]'],
             startDate: '2020-04-13',
             endDate: '2021-04-13',
         }),
@@ -35,40 +35,36 @@ export const Tumour = () => {
         variables: { page: 0 },
     })
 
-    if (error) {
-        return <span>ERROR: {error.message}</span>
-    }
+    if (error) { return <span>ERROR: {error.message}</span> }
 
     if (loading) {
-
         return (
             <>
-                    <h1>Tumour Data for Export</h1>
+                <h1>Tumour Data for Export</h1>
+                <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '100%' }} className={styles.row}>
+                    <div>
+                        <OrganisationUnitTree
+                            onChange={onChange}
+                            // singleSelection
+                            name="Burato District"
+                            roots={['dxpTd93bjuK']}
+                            // selected={['dxpTd93bjuK/OujzhM1lgN5']}
+                            highlighted={['dxpTd93bjuK/OujzhM1lgN5']}
+                            initiallyExpanded={['dxpTd93bjuK']}
+                        />
 
-        <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '100%' }} className={styles.row}>
-            <div>
-                <OrganisationUnitTree
-                    onChange={onChange}
-                    // singleSelection
-                    name="Burato District"
-                    roots={['dxpTd93bjuK']}
-                    // selected={['dxpTd93bjuK/OujzhM1lgN5']}
-                    highlighted={['dxpTd93bjuK/OujzhM1lgN5']}
-                    initiallyExpanded={['dxpTd93bjuK']}
-                />
-
-            </div>
-            
-            <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '30%' }}>
-              <InputField label="From" type="date" value={dateFrom} onChange={({ value }) => setDateFrom(value)} />
-            </div>
-            <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '30%' }}>
-              <InputField label="To" type="date" value={dateTo} onChange={({ value }) => setDateTo(value)} />
-            </div>
-        </div>
-        
-        <CircularLoader />
-        </>
+                    </div>
+                    
+                    <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '30%' }}>
+                    <InputField label="From" type="date" value={dateFrom} onChange={({ value }) => setDateFrom(value)} />
+                    </div>
+                    <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '30%' }}>
+                    <InputField label="To" type="date" value={dateTo} onChange={({ value }) => setDateTo(value)} />
+                    </div>
+                </div>
+                
+                <CircularLoader />
+            </>
         )
     }
 
