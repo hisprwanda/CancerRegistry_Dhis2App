@@ -13,14 +13,23 @@ export const TumourTableView = ({ events, refetch }) => {
 
   const csv_props = { data: '', headers: '', filename: 'source.csv' };
   
-  var RECS = "1", CHEC = "1", HIVSTATUS = "", DATEHIVTEST = "", AGE = "";
-  const tumourTableHeaders = "RECS"+"\t"+"CHEC"+"\t"+"HIVSTATUS"+"\t"+"DATEHIVTEST"+"\t"+"AGE";
+  var RECS = "1", CHEC = "1", HIVSTATUS = "", DATEHIVTEST = "", AGE = "",ADDR= "",MPSEQ= "0",MPTOT= "",INCID= "",BAS= "",TOP= "",BEH= "",
+  LATERALITY="",MOR="",I10="",ICCC="",GRDE="",STAGE="",T="",N="",M="",UPDATE="",OBSOLETEFLAGTUMOURTABLE="",TUMOURID= "",PATIENTIDTUMOURTABLE= "",PATIENTRECORDIDTUMOURTABLE="",
+  TUMOURUPDATEDBY="",TUMOURUNDUPLICATIONSTATUS="",INITIALT="",INTENTT="",SGRY="",DATES="",CHEMO="",STARTC="",ENDCHEMO="",IMMUNO="",STARTI="",ENDIMMUNO="",HPVASS="",RADIO="",
+  STARTR="",ENDRADIO="",HORMO="",STARTH="",ENDHORMO="",PALLIA="",DATEP="",OTHERT="",SPECIFYOT="",STARTOT="",ENDOT="";
+  
+  const tumourTableHeaders = "RECS"+"\t"+"CHEC"+"\t"+"HIVSTATUS"+"\t"+"DATEHIVTEST"+"\t"+"AGE"+"\t"+"ADDR"+"\t"+"MPSEQ"+"\t"+"MPTOT"+"\t"+"INCID"+"\t"+"BAS"+"\t"+"TOP"+"\t"+"BEH"+"\t"+
+  "LATERALITY"+"\t"+"MOR"+"\t"+"I10"+"\t"+"ICCC"+"\t"+"GRDE"+"\t"+"STAGE"+"\t"+"T"+"\t"+"N"+"\t"+"M"+"\t"+"UPDATE"+"\t"+"OBSOLETEFLAGTUMOURTABLE"+"\t"+"TUMOURID"+"\t"+"PATIENTIDTUMOURTABLE"+"\t"+"PATIENTRECORDIDTUMOURTABLE"+"\t"+
+  "TUMOURUPDATEDBY"+"\t"+"TUMOURUNDUPLICATIONSTATUS"+"\t"+"INITIALT"+"\t"+"INTENTT"+"\t"+"SGRY"+"\t"+"DATES"+"\t"+"CHEMO"+"\t"+"STARTC"+"\t"+"ENDCHEMO"+"\t"+"IMMUNO"+"\t"+"STARTI"+"\t"+"ENDIMMUNO"+"\t"+"HPVASS"+"\t"+"RADIO"+"\t"+
+  "STARTR"+"\t"+"ENDRADIO"+"\t"+"HORMO"+"\t"+"STARTH"+"\t"+"ENDHORMO"+"\t"+"PALLIA"+"\t"+"DATEP"+"\t"+"OTHERT"+"\t"+"SPECIFYOT"+"\t"+"STARTOT"+"\t"+"ENDOT";
+  ;
   var tumourTableData = tumourTableHeaders;
   
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
 
   const exportTSVFile = (events) =>{
+    console.log("Events length: ",events.length);
     events.map((event) => {
       event.dataValues.map((dataValue) =>{
           if(dataValue.dataElement == "XBZsBO1iIMu") {
@@ -32,7 +41,30 @@ export const TumourTableView = ({ events, refetch }) => {
           if(dataValue.dataElement == "Lklmhjoa2VZ") {
             AGE = dataValue.value
           }
-          var tumourTableRow = RECS+"\t"+CHEC+"\t"+HIVSTATUS+"\t"+DATEHIVTEST+"\t"+AGE;
+          if(dataValue.dataElement == "Yiplgepu9rQ") {
+            ADDR = dataValue.value
+          }
+          if(dataValue.dataElement == "QsbsNHyRwcu") {
+            MPTOT = dataValue.value
+          }
+          if(dataValue.dataElement == "qiPi86HJH9D") {
+            INCID = dataValue.value
+          }
+          if(dataValue.dataElement == "b4nlCulDaNv") {
+            BAS = dataValue.value
+          }
+          if(dataValue.dataElement == "VahotmishoD") {
+            TOP = dataValue.value
+          }
+          if(dataValue.dataElement == "R3V4FZ7bm1Z") {
+            BEH = dataValue.value
+          }
+          if(dataValue.dataElement == "U6uTS5AuKQi") {
+            TUMOURID = "021025250101"
+            PATIENTIDTUMOURTABLE = "02102525"
+            PATIENTRECORDIDTUMOURTABLE = "0210252501"
+          }
+          var tumourTableRow = RECS+"\t"+CHEC+"\t"+HIVSTATUS+"\t"+DATEHIVTEST+"\t"+AGE +"\t"+ADDR+"\t"+MPSEQ+"\t"+MPTOT+"\t"+INCID+"\t"+BAS+"\t"+TOP+"\t"+BEH+"\t"+TUMOURID+"\t"+PATIENTIDTUMOURTABLE+"\t"+PATIENTRECORDIDTUMOURTABLE;
           tumourTableData = tumourTableData+ "\n" +tumourTableRow;
       });
     });
