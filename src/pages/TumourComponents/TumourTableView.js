@@ -1,13 +1,15 @@
 import { Button, ButtonStrip, Table, TableBody, TableCell, TableCellHead, TableHead, TableRow, TableRowHead,
 InputField, OrganisationUnitTree} from "@dhis2/ui";
+import { TumourTableViewHeader } from './TumourTableViewHeader'
+
+import { useDataQuery } from '@dhis2/app-runtime'
 import React, { useState }  from "react";
 import styles from '../Form.module.css'
 import { DeleteTumourEventBtn } from './DeleteTumourEventBtn'
 import { NewTumourEventBtn } from "./NewTumourEventBtn";
 
-
 export const TumourTableView = ({ events, refetch }) => {
-  
+
   var RECS = "1", CHEC = "1", HIVSTATUS = "", DATEHIVTEST = "", AGE = "",ADDR= "",MPSEQ= "0",MPTOT= "",INCID= "",BAS= "",TOP= "",BEH= "",
       LATERALITY="",MOR="",I10="",ICCC="",GRDE="",STAGE="",T="",N="",M="",UPDATE="20210605",OBSOLETEFLAGTUMOURTABLE="0",TUMOURID= "",PATIENTIDTUMOURTABLE= "",PATIENTRECORDIDTUMOURTABLE="",
       TUMOURUPDATEDBY="",TUMOURUNDUPLICATIONSTATUS="",INITIALT="",INTENTT="",SGRY="",DATES="",CHEMO="",STARTC="",ENDCHEMO="",IMMUNO="",STARTI="",ENDIMMUNO="",HPVASS="",RADIO="",
@@ -18,14 +20,11 @@ export const TumourTableView = ({ events, refetch }) => {
             "TUMOURUPDATEDBY"+"\t"+"TUMOURUNDUPLICATIONSTATUS"+"\t"+"INITIALT"+"\t"+"INTENTT"+"\t"+"SGRY"+"\t"+"DATES"+"\t"+"CHEMO"+"\t"+"STARTC"+"\t"+"ENDCHEMO"+"\t"+"IMMUNO"+"\t"+"STARTI"+"\t"+"ENDIMMUNO"+"\t"+"HPVASS"+"\t"+"RADIO"+"\t"+
             "STARTR"+"\t"+"ENDRADIO"+"\t"+"HORMO"+"\t"+"STARTH"+"\t"+"ENDHORMO"+"\t"+"PALLIA"+"\t"+"DATEP"+"\t"+"OTHERT"+"\t"+"SPECIFYOT"+"\t"+"STARTOT"+"\t"+"ENDOT";
   var tumourTableData = tumourTableHeaders;
-  
-  const [dateFrom, setDateFrom] = useState('');
-  const [dateTo, setDateTo] = useState('');
 
   const formatPatientID = (oldID) => {
     var newID
     if (oldID.length == 11) {
-      newID = oldID.substring(0, 4) + oldID.substring(5, 9);
+      newID = oldID.substring(1, 11);
     } else if  (oldID.length > 11){ newID = oldID.substring(10); }
     return newID;
   }
@@ -96,42 +95,14 @@ export const TumourTableView = ({ events, refetch }) => {
     aElement.click();
   }
 
-  const onChange = (ev) =>{
-    console.log("Selected Orgunit", ev.path);
-  }
-
   return (
     <div className='products'>
-        <h1>Tumour Data for Export</h1>
-        <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '100%' }} className={styles.row}>
-            <div>
-                <OrganisationUnitTree
-                    onChange={onChange}
-                    // singleSelection
-                    name="Burato District"
-                    roots={['dxpTd93bjuK']}
-                    // selected={['dxpTd93bjuK/OujzhM1lgN5']}
-                    highlighted={['dxpTd93bjuK/OujzhM1lgN5']}
-                    initiallyExpanded={['dxpTd93bjuK']}
-                />
-
-            </div>
-            
-            <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '30%' }}>
-              <InputField label="From" type="date" value={dateFrom} onChange={({ value }) => setDateFrom(value)} />
-            </div>
-            <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '30%' }}>
-              <InputField 
-              label="To" 
-              type="date" 
-              value={dateTo} 
-              onChange={({ value }) => setDateTo(value)} />
-            </div>
-            <Button primary onClick={() => {exportTSVFile(events)}}>Export Tumour Data </Button>
-        </div>
-
         
-            
+        <TumourTableViewHeader />
+        <Button primary>Filter </Button>
+        <Button primary onClick={() => {exportTSVFile(events)}}>Download Tumour Data </Button>
+
+         
       <Table>
       <TableHead>
         <TableRowHead>
@@ -190,11 +161,6 @@ export const TumourTableView = ({ events, refetch }) => {
           <TableCellHead>SPECIFYOT</TableCellHead>
           <TableCellHead>STARTOT</TableCellHead>
           <TableCellHead>ENDOT</TableCellHead>
-          <TableCellHead>
-            <ButtonStrip end>
-              <NewTumourEventBtn refetch={refetch} />
-            </ButtonStrip>
-          </TableCellHead>
         </TableRowHead>
       </TableHead>
       <TableBody>
@@ -255,17 +221,12 @@ export const TumourTableView = ({ events, refetch }) => {
             <TableCell>{evnt.dataValues.map(dataValue => dataValue.dataElement=="tfeZgkgqJC9"?dataValue.value:"")}</TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
-         
-            <TableCell>
-              <ButtonStrip end>
-                <DeleteTumourEventBtn id={evnt.id} refetch={refetch} />
-              </ButtonStrip>
-            </TableCell>
           </TableRow>
           
         ))}
       </TableBody>
     </Table>
     </div>
-  )
- };
+    )
+}
+
