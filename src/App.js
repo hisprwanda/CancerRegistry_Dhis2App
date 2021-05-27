@@ -2,9 +2,10 @@ import './App.css'
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import styles from './App.module.css'
-import { Navigation } from './navigation/Navigation'
-import { Home, Tumour, Source, DataFilter, Reports, NoMatch } from './pages'
+import { Navigation } from './navigation'
+import { Home, Tumour, DataFilter, Reports, NoMatch } from './pages'
 import Patient from './pages/Patient'
+import Source from './pages/Source'
 
 const MyApp = () => (
     <BrowserRouter
