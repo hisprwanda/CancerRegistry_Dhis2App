@@ -23,6 +23,12 @@ const csv_props = {
   filename: 'source.csv'
 };
 
+function testtxt(evt)
+{
+  console.log(evt);
+}
+
+
 export const TumourTableView = ({ events, refetch }) => (
 
   <div className='products'>
@@ -37,9 +43,9 @@ export const TumourTableView = ({ events, refetch }) => (
         }}
         className={styles.row}>
               
-          <CSVLink {...csv_props}>
-              <Button primary type="submit">Export Tumour Data </Button>
-          </CSVLink>
+              {testtxt(events)}
+             
+       
 </div>
 
   <Table>

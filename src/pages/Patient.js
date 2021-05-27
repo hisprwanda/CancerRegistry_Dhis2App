@@ -25,6 +25,9 @@ import { ReactFinalForm } from '@dhis2/ui'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Moment from 'react-moment';
+import { CircularLoader } from '@dhis2/ui'
+import { useDataQuery } from '@dhis2/app-runtime'
+import {BaseUrlTest} from './BaseUrlTest'
 
 
 
@@ -33,24 +36,29 @@ var data = []
 var endpointtracker='https://dev.hisprwanda.org/oncology/api/trackedEntityInstances.json?ou=';
 var endpointou='https://dev.hisprwanda.org/oncology/api/organisationUnits/';
 
-var headers = [
-    { label: 'REGNO', key: 'regno' },
-    { label: 'PERS', key: 'pers' },
-    { label: 'IDENTITYCARD', key: 'idnum' },
-    { label: 'SURNAME', key: 'firstName' },
-    { label: 'FIRSTN', key: 'lastName' },
-    { label: 'SEX', key: 'gender' },
-    { label: 'BIRTHD', key: 'bd' },
-    { label: 'PHONE1', key: 'phone' },
-    { label: 'PHONEN2', key: 'phone1' },
-    { label: 'Date', key: 'date' },
-]
 
-var csvReport = {
-    filename: 'Report.csv',
-    headers: headers,
-    data: data,
+const eventsQuery = {
+    results: {
+        resource: 'events',
+        params: ({ page }) => ({
+            page: page,
+            orgUnit: 'OujzhM1lgN5',
+            programStage: 'Y0cWLBEdXzb',
+            pageSize: 5,
+            fields: ['dataValues'],
+            startDate: '2020-04-13',
+            endDate: '2021-04-13',
+        }),
+    },
 }
+
+
+
+
+
+
+
+
 
 /**
  * This is just a function to demonstrate the values when the form is submitted
@@ -302,47 +310,47 @@ var bds1=pyear1+"-"+pdate1+"-"+pmonth1;
         itemp.enrollments.map(function(enrolmnt, i){
           enrolmnt.events.map(function(evts, i){
       
-      if(evts.programStage=="yj7nAGqKXZw")
-      {
-        evts.dataValues.map(function(dtvalues, i){
-      
-      if(dtvalues.dataElement=="ya7NvvPZ6NE")
-      {
-        //console.log(dtvalues.value);
-        stus=dtvalues.value;
-      }
-      
-      if(dtvalues.dataElement=="TFmh28f4Ylz")
-      {
-        //console.log(dtvalues.value);
-        oncopr=dtvalues.value;
-      }
-      if(dtvalues.dataElement=="CiP6FnZEAr7")
-      {
-        //console.log(dtvalues.value);
-        progress=dtvalues.value;
-      }
-      if(dtvalues.dataElement=="amOhRQ0vBI7")
-      {
-        //console.log(dtvalues.value);
-        csdeath=dtvalues.value;
-      }
-      if(dtvalues.dataElement=="CMycg9jCdw3")
-      {
-        //console.log(dtvalues.value);
-        placd=dtvalues.value;
-      }
-      
-      
-      
-      
-      
-      
-      
-      })
-      }
-          })
-        })
+            if(evts.programStage=="yj7nAGqKXZw")
+            {
+                evts.dataValues.map(function(dtvalues, i){
+            
+            if(dtvalues.dataElement=="ya7NvvPZ6NE")
+            {
+                //console.log(dtvalues.value);
+                stus=dtvalues.value;
+            }
+            
+            if(dtvalues.dataElement=="TFmh28f4Ylz")
+            {
+                //console.log(dtvalues.value);
+                oncopr=dtvalues.value;
+            }
+            if(dtvalues.dataElement=="CiP6FnZEAr7")
+            {
+                //console.log(dtvalues.value);
+                progress=dtvalues.value;
+            }
+            if(dtvalues.dataElement=="amOhRQ0vBI7")
+            {
+                //console.log(dtvalues.value);
+                csdeath=dtvalues.value;
+            }
+            if(dtvalues.dataElement=="CMycg9jCdw3")
+            {
+                //console.log(dtvalues.value);
+                placd=dtvalues.value;
+            }
+            
+            
+            
+            
+            
+            
+            
+            })
+            }
+                })
+                })
       
       
       
@@ -668,11 +676,20 @@ var bds1=pyear1+"-"+pdate1+"-"+pmonth1;
                 { auth: { username: 'pndayizigiye', password: 'Pascal@1234' } }
             )
             .then(res => {
-                console.log(res.data.organisationUnits)
+                
                 this.setState({
                     orgs: res.data.organisationUnits,
                 })
             })
+
+// test dhis2 library...
+
+
+
+
+
+
+
     }
 
     handleChange = (date) => {
@@ -687,6 +704,10 @@ var bds1=pyear1+"-"+pdate1+"-"+pmonth1;
         this.setState({enddate: date});
       };
 
+    
+         
+      
+
     render() {
         var a = 0
        
@@ -694,6 +715,7 @@ var bds1=pyear1+"-"+pdate1+"-"+pmonth1;
         return (
             <div className="products">
                 <h1>Location Filter</h1>
+                
 
                 <ReactFinalForm.Form onSubmit={this.myChangeHandler}>
                     {({ handleSubmit }) => (
@@ -731,6 +753,8 @@ End Date
                   className={styles.cbx}
                 />
                 </div>
+
+             
                                             </div>
                                         </TableCellHead>
 
@@ -902,7 +926,7 @@ End Date
                 <br />
 
 
-{this.state.isLoaded==false?"Loading...":
+{this.state.isLoaded==false?<CircularLoader />:
 
 
 
@@ -971,7 +995,7 @@ End Date
                                 <TableCell>
                                     {item.attributes.map((attr, index) => (
                                         <p>
-                                            {attr.attribute == 'm1At2P4UT9e'
+                                            {attr.attribute == 'dd98c7o6RjZ'
                                                 ? attr.value
                                                 : ''}
                                         </p>
