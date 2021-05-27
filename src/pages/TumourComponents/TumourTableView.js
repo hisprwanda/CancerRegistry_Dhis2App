@@ -24,7 +24,7 @@ export const TumourTableView = ({ events, refetch }) => {
   const formatPatientID = (oldID) => {
     var newID
     if (oldID.length == 11) {
-      newID = oldID.substring(1, 11);
+      newID = oldID.substring(1, 9);
     } else if  (oldID.length > 11){ newID = oldID.substring(10); }
     return newID;
   }
@@ -56,7 +56,7 @@ export const TumourTableView = ({ events, refetch }) => {
             PATIENTIDTUMOURTABLE = coreID;
             PATIENTRECORDIDTUMOURTABLE = coreID +"01";
           }
-          TUMOURUPDATEDBY = event.completedBy;
+          TUMOURUPDATEDBY = event.completedBy?event.completedBy:"";
           if(dataValue.dataElement == "QDYFCDo0kLm") { INITIALT = dataValue.value }
           if(dataValue.dataElement == "EJi6tdw5T1v") { INTENTT = dataValue.value }
           if(dataValue.dataElement == "lb1iN94cSNn") { SGRY = dataValue.value }

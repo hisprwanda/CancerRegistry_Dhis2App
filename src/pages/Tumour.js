@@ -17,10 +17,9 @@ const eventsQuery = {
             orgUnit: 'OujzhM1lgN5',
             program: 'rx6V962E4XM',
             programStage: 'Y0cWLBEdXzb',
-            pageSize: 5,
             fields: ['completedBy,dataValues[dataElement,value]'],
-            startDate: '2020-05-01',
-            endDate: '2021-05-26',
+            startDate: '2021-02-01',
+            endDate: '2021-05-27',
         }),
     },
 }
