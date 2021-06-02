@@ -1,7 +1,7 @@
 import { Button, InputField,Table, TableHead, TableCellHead, TableRowHead } from "@dhis2/ui";
 
 import { useDataQuery } from '@dhis2/app-runtime'
-import React, { useState }  from "react";
+import React, { useState, useEffect }  from "react";
 import styles from '../Form.module.css'
 
 // Nyamata: R0kfMYExrnk
@@ -17,106 +17,128 @@ const orgUnitsQuery = {
     },
 }
 
-export const TumourTableViewHeader = () => {
+export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
   const { loading, error, data, refetch } = useDataQuery(orgUnitsQuery, {
     variables: { orgUnitID: 'Hjw70Lodtf2' },
-})
+    lazy: true,
+  })
 
- 
+  
   // Component's states
-  const [provinces, setProvinces] = useState([])
+  // const [provinces, setProvinces] = useState([])
   const [districts, setDistricts] = useState([])
-  const [subdistrict, setSubdistrict] = useState([])
+  const [subdistricts, setSubdistricts] = useState([])
   const [sectors, setSectors] = useState([])
   const [facilities, setFacilities] = useState([])
-
+  const [orgUnitID, setOrgUnitID] = useState([])
+  
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  
+  useEffect(() =>{
+    refetch()
+  }, [])
 
-  const getChildrenOrgUnits = (parentOrgUnitID) => {
-    var chilrenOrgUnits = []
-      return chilrenOrgUnits
+  const updateFilterInfo = () => {
+    onUpdateFetchInfo(startDate, endDate, orgUnitID)
+  }
+  
+  const updateFacilityID = (ev) => {
+    let orgUnitID = ev.target.value
+    setOrgUnitID(orgUnitID)
   }
 
-
-  const getProvinces = (orgUnitID) => {
-    console.log("Passed org unit: " +orgUnitID)
-    // refetch({ orgUnitID: orgUnitID })
+  const getDistricts = (ev) => {
+    let orgUnitID = ev.target.value
+    refetch({ orgUnitID: orgUnitID })
+    if(data){
+      setDistricts(data.results.children)
+    }
   }
 
-  const getDistricts = (provinceID) => {
-    
-    return "chilrenOrgUnits"
+  const getSubDistricts = (ev) => {
+    let orgUnitID = ev.target.value
+    refetch({ orgUnitID: orgUnitID })
+    {data && setSubdistricts(data.results.children)}
+  }
+
+  const getSectors = (ev) => {
+    let orgUnitID = ev.target.value
+    refetch({ orgUnitID: orgUnitID })
+    {data && setSectors(data.results.children)}
+  }
+
+  const getFacilities = (ev) => {
+    let orgUnitID = ev.target.value
+    refetch({ orgUnitID: orgUnitID })
+    {data && setFacilities(data.results.children)}
   }
 
   return (
     <div className='products'>
         <h1>Tumour Data for Export</h1>
-
         <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '40%' }} className={styles.row}>
             <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '30%' }}>
               <InputField label="From" type="date" value={startDate} onChange={({ value }) => setStartDate(value)} />
             </div>
             <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '30%' }}>
-              <InputField 
-              label="To" 
-              type="date" 
-              value={endDate} 
-              onChange={({ value }) => setEndDate(value)} />
+              <InputField label="To" type="date" value={endDate} onChange={({ value }) => setEndDate(value)} />
             </div>
         </div>
-        
+
         <div style={{ width: '30%' }}>
           <Table >
             <TableHead>
                 <TableRowHead>
                     <TableCellHead>
                       <div className={styles.row}>
-                          <select className={styles.cbx} onChange={getProvinces} name="provselected">
+                        {/* <p>{data.results.children}</p> */}
+                          <select className={styles.cbx} onChange={getDistricts} name="provselected">
                               <option value="0">Select Province...</option>
-                              <option>Kigali city</option>
-                              <option>North</option>
-                              <option>South</option>
-                              <option>West</option>
-                              <option>East</option>
+                              {provinces.map( (orgUnit) => (
+                                 <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
+                              ))}
+                               
                           </select>
                       </div>
                       </TableCellHead>
                       <TableCellHead>
                         <div className={styles.row}>
-                            <select className={styles.cbx} onChange={getProvinces} name="provselected">
+                            <select className={styles.cbx} onChange={getSubDistricts} name="provselected">
                                 <option value="0">Select District...</option>
-                                <option>Burera</option>
-                                <option>Musanze</option>
-                                <option>Gicumbi</option>
+                                {districts.map( (orgUnit) => (
+                                 <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
+                              ))}
                             </select>
                         </div>
                       </TableCellHead>
                       <TableCellHead>
                         <div className={styles.row}>
-                            <select className={styles.cbx} onChange={getProvinces} name="provselected">
+                            <select className={styles.cbx} onChange={getSectors} name="provselected">
                                 <option value="0">Select Sub-District...</option>
-                                <option>Butaro Sub-District</option>
+                                {subdistricts.map( (orgUnit) => (
+                                 <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
+                              ))}
                             </select>
                         </div>
                       </TableCellHead>
                       <TableCellHead>
                         <div className={styles.row}>
-                            <select className={styles.cbx} onChange={getProvinces} name="provselected">
+                            <select className={styles.cbx} onChange={getFacilities} name="provselected">
                                 <option value="0">Select Sector...</option>
-                                <option>Ruhunde </option>
-                                <option>Butaro </option>
-                                <option>Gatebe </option>
+                                {sectors.map( (orgUnit) => (
+                                 <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
+                              ))}
                             </select>
                         </div>
                       </TableCellHead>
                       <TableCellHead>
                         <div className={styles.row}>
-                            <select className={styles.cbx} onChange={getProvinces} name="provselected">
+                            <select className={styles.cbx} onChange={updateFacilityID} name="provselected">
                                 <option value="0">Select Facility...</option>
-                                <option>Butaro DH </option>
-                                <option>Butaro CS</option>
-                                <option>Butaro MU </option>
+                                {facilities.map( (orgUnit) => (
+                                 <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
+                              ))}
                             </select>
                         </div>
                       </TableCellHead>
@@ -124,8 +146,7 @@ export const TumourTableViewHeader = () => {
                 </TableHead>
             </Table>
          </div>         
-          
-        
+         <Button primary onClick={updateFilterInfo}>Filter </Button>     
     </div>
   )
 }
