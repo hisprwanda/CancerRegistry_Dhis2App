@@ -8,7 +8,8 @@ import Patient from './pages/Patient'
 import Source from './pages/Source'
 
 const MyApp = () => (
-    <BrowserRouter
+    <BrowserRouter basename="/oncology/api/apps/Cancer-Registry/index.html#"
+
     // This Router will use the browser history.
     // If older browsers need to be supported,
     // then the `HashRouter` can be used
