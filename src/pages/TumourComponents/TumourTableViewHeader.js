@@ -3,6 +3,8 @@ import { Button, InputField,Table, TableHead, TableCellHead, TableRowHead } from
 import { useDataQuery } from '@dhis2/app-runtime'
 import React, { useState, useEffect }  from "react";
 import styles from '../Form.module.css'
+import i18n from '../../locales/index.js'
+
 
 // Nyamata: R0kfMYExrnk
 // Butaro: OujzhM1lgN5
@@ -35,9 +37,9 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   
-  useEffect(() =>{
-    refetch()
-  }, [])
+  // useEffect(() =>{
+  //   refetch()
+  // }, [])
 
   const updateFilterInfo = () => {
     onUpdateFetchInfo(startDate, endDate, orgUnitID)
@@ -76,7 +78,7 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
 
   return (
     <div className='products'>
-        <h1>Tumour Data for Export</h1>
+        <h1>{i18n.t('Tumour Data for Export')}</h1>
         <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '40%' }} className={styles.row}>
             <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '30%' }}>
               <InputField label="From" type="date" value={startDate} onChange={({ value }) => setStartDate(value)} />
@@ -95,7 +97,7 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
                         {/* <p>{data.results.children}</p> */}
                           <select className={styles.cbx} onChange={getDistricts} name="provselected">
                               <option value="0">Select Province...</option>
-                              {provinces.map( (orgUnit) => (
+                              {provinces && provinces.map( (orgUnit) => (
                                  <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
                               ))}
                                
@@ -106,7 +108,7 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
                         <div className={styles.row}>
                             <select className={styles.cbx} onChange={getSubDistricts} name="provselected">
                                 <option value="0">Select District...</option>
-                                {districts.map( (orgUnit) => (
+                                {districts && districts.map( (orgUnit) => (
                                  <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
                               ))}
                             </select>
@@ -116,7 +118,7 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
                         <div className={styles.row}>
                             <select className={styles.cbx} onChange={getSectors} name="provselected">
                                 <option value="0">Select Sub-District...</option>
-                                {subdistricts.map( (orgUnit) => (
+                                {subdistricts && subdistricts.map( (orgUnit) => (
                                  <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
                               ))}
                             </select>
@@ -126,7 +128,7 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
                         <div className={styles.row}>
                             <select className={styles.cbx} onChange={getFacilities} name="provselected">
                                 <option value="0">Select Sector...</option>
-                                {sectors.map( (orgUnit) => (
+                                {sectors && sectors.map( (orgUnit) => (
                                  <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
                               ))}
                             </select>
@@ -136,7 +138,7 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
                         <div className={styles.row}>
                             <select className={styles.cbx} onChange={updateFacilityID} name="provselected">
                                 <option value="0">Select Facility...</option>
-                                {facilities.map( (orgUnit) => (
+                                {facilities && facilities.map( (orgUnit) => (
                                  <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
                               ))}
                             </select>

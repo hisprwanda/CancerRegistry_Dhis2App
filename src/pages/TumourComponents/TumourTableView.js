@@ -1,6 +1,5 @@
 import { Button, ButtonStrip, Table, TableBody, TableCell, TableCellHead, TableHead, TableRow, TableRowHead } from "@dhis2/ui";
 import { TumourTableViewHeader } from './TumourTableViewHeader'
-
 import { useDataQuery } from '@dhis2/app-runtime'
 import React, { useState }  from "react";
 import styles from '../Form.module.css'
@@ -25,7 +24,6 @@ export const TumourTableView = ({ trackedEntityInstances, refetch }) => {
     } else if  (oldID.length > 11){ newID = oldID.substring(10); }
     return newID;
   }
-
 
   const exportTSVFile = (trackedEntityInstances) =>{
     
@@ -101,12 +99,10 @@ export const TumourTableView = ({ trackedEntityInstances, refetch }) => {
   }
 
   return (
-      <div className='products'>
-        
+      <div className='products'>   
         <TumourTableViewHeader />
         <Button primary>Filter </Button>
-        <Button primary onClick={() => {exportTSVFile(trackedEntityInstances)}}>Download Tumour Data </Button>
-
+        <Button primary onClick={() => {exportTSVFile(trackedEntityInstances)}}>Download Tumour Datasss </Button>
          
       <Table>
       <TableHead>
@@ -174,6 +170,7 @@ export const TumourTableView = ({ trackedEntityInstances, refetch }) => {
             enrollment.events.map((teiEvent) => (
               teiEvent.programStage=="Y0cWLBEdXzb"?
               <TableRow key={teiEvent.event}>
+                  
                   <TableCell>1</TableCell>
                   <TableCell>1</TableCell>
                   <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="XBZsBO1iIMu"?dataValue.value:"")}</TableCell>

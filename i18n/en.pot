@@ -5,11 +5,47 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2021-02-25T10:35:18.072Z\n"
-"PO-Revision-Date: 2021-02-25T10:35:18.072Z\n"
+"POT-Creation-Date: 2021-06-05T09:16:09.237Z\n"
+"PO-Revision-Date: 2021-06-05T09:16:09.237Z\n"
 
-msgid "Hello {{name}}"
+msgid "Home"
 msgstr ""
 
-msgid "Welcome to DHIS2!"
+msgid "Tumour"
+msgstr ""
+
+msgid "Patient"
+msgstr ""
+
+msgid "Source"
+msgstr ""
+
+msgid "Data Filter"
+msgstr ""
+
+msgid "Reports"
+msgstr ""
+
+msgid "Home page"
+msgstr ""
+
+msgid "Cancer Registry"
+msgstr ""
+
+msgid "in"
+msgstr ""
+
+msgid "Use the left menu to view, filter and export data to"
+msgstr ""
+
+msgid "Location Filter"
+msgstr ""
+
+msgid "Source Location Filter"
+msgstr ""
+
+msgid "Download Tumour Data"
+msgstr ""
+
+msgid "Tumour Data for Export"
 msgstr ""

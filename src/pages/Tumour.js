@@ -6,9 +6,8 @@ import React, { useState } from 'react'
 
 import { TumourTableView } from './TumourComponents/TumourTableView'
 import { PaginationControls } from './TumourComponents/PaginationControls'
-import styles from './Form.module.css'
-
 import * as classes from '../App.module.css'
+import i18n from "../locales/index.js";
 
 
 const eventsQuery = {
@@ -22,7 +21,7 @@ const eventsQuery = {
             programStartDate:startDate,
             programEndDate:endDate,
             totalPages: true,
-            pageSize:2,
+            pageSize:3,
         }),
     },
     provinces: {
@@ -36,7 +35,7 @@ const eventsQuery = {
 
 export const Tumour = () => {
     const { loading, error, data, refetch } = useDataQuery(eventsQuery, {
-        variables: { page: 0, startDate: '2021-02-06', endDate: '2021-06-01', orgUnitID: 'OujzhM1lgN5' },
+        variables: { page: 0, startDate: '2021-02-01', endDate: '2021-06-01', orgUnitID: 'OujzhM1lgN5' },
     })
 
     if (error) { return <span>ERROR: {error.message}</span> }
@@ -44,7 +43,7 @@ export const Tumour = () => {
     if (loading) {
         return (
             <>
-                <h1>Tumour Data for Export</h1>
+                <TumourTableViewHeader/>
                 <CircularLoader />
             </>
         )
@@ -147,7 +146,7 @@ export const Tumour = () => {
         refetch({ 
             startDate: startDate,
             endDate: endDate,
-            orgUnitID: orgUnitID 
+            // orgUnitID: orgUnitID 
         })
     }
 
@@ -158,7 +157,7 @@ export const Tumour = () => {
           <div className='products'>
             <TumourTableViewHeader onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
 
-            <Button primary onClick={() => {exportTSVFile(data.results.trackedEntityInstances)}}>Download Tumour Data </Button>
+            <Button primary onClick={() => {exportTSVFile(data.results.trackedEntityInstances)}}>{i18n.t('Download Tumour Data')} </Button>
 
             <Table>
             <TableHead>

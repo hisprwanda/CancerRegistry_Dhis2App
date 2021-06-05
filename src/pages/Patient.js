@@ -28,6 +28,7 @@ import Moment from 'react-moment';
 import { CircularLoader } from '@dhis2/ui'
 import { useDataQuery } from '@dhis2/app-runtime'
 import {BaseUrlTest} from './BaseUrlTest'
+import i18n from '../locales/index'
 
 
 
@@ -714,7 +715,7 @@ var bds1=pyear1+"-"+pdate1+"-"+pmonth1;
 
         return (
             <div className="products">
-                <h1>Location Filter</h1>
+                <h1>{i18n.t('Location Filter')}</h1>
                 
 
                 <ReactFinalForm.Form onSubmit={this.myChangeHandler}>

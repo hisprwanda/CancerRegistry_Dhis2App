@@ -27,7 +27,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Moment from 'react-moment';
 import { CircularLoader } from '@dhis2/ui'
 import { useDataQuery } from '@dhis2/app-runtime'
-
+import i18n from '../locales/index.js'
 
 
 var data = []
@@ -433,7 +433,7 @@ var bds1=pyear1+"-"+pdate1+"-"+pmonth1;
           
         
           
-          if(itm.attribute=="PTGSZmTk3IQ")
+            if(itm.attribute=="PTGSZmTk3IQ")
           {
             tumourid_src_table=itm.value;
             var strFirstThree = tumourid_src_table.substring(0,2);
@@ -443,7 +443,7 @@ var bds1=pyear1+"-"+pdate1+"-"+pmonth1;
             if(regnolength=="9")
             {
             
-                tumourid_src_table=tumourid_src_table.substring(1,9)+"01"; 
+                tumourid_src_table=tumourid_src_table.substring(1,9)+"0101"; 
                 source_record_id=tumourid_src_table+"01";
             
             }
@@ -452,7 +452,7 @@ var bds1=pyear1+"-"+pdate1+"-"+pmonth1;
             {
               var n1=tumourid_src_table.substring(5,8);
               var n2=tumourid_src_table.substring(9,14);
-              aregno=n1+n2+"01"; 
+              aregno=n1+n2+"0101"; 
               source_record_id=aregno+"01";
               tumourid_src_table=aregno;
             }
@@ -718,7 +718,7 @@ var bds1=pyear1+"-"+pdate1+"-"+pmonth1;
 
         return (
             <div className="products">
-                <h1>Source Location Filter</h1>
+                <h1>{i18n.t('Source Location Filter')}</h1>
 
                 <ReactFinalForm.Form onSubmit={this.myChangeHandler}>
                     {({ handleSubmit }) => (
