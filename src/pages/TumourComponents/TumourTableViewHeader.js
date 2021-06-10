@@ -1,4 +1,4 @@
-import { Button, InputField,Table, TableHead, TableCellHead, TableRowHead } from "@dhis2/ui";
+import { Button, CircularLoader, InputField,Table, TableHead, TableCellHead, TableRowHead } from "@dhis2/ui";
 
 import { useDataQuery } from '@dhis2/app-runtime'
 import React, { useState, useEffect }  from "react";
@@ -20,62 +20,54 @@ const orgUnitsQuery = {
 }
 
 export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
-  const { loading, error, data, refetch } = useDataQuery(orgUnitsQuery, {
-    variables: { orgUnitID: 'Hjw70Lodtf2' },
-    lazy: true,
-  })
-
   
   // Component's states
-  // const [provinces, setProvinces] = useState([])
+  const [orgUnitLevel, setOrgUnitLevel] = useState('')
   const [districts, setDistricts] = useState([])
   const [subdistricts, setSubdistricts] = useState([])
   const [sectors, setSectors] = useState([])
   const [facilities, setFacilities] = useState([])
-  const [orgUnitID, setOrgUnitID] = useState([])
   
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   
-  // useEffect(() =>{
-  //   refetch()
-  // }, [])
-
+  const { data, refetch } = useDataQuery(orgUnitsQuery, {
+    variables: { orgUnitID: 'Hjw70Lodtf2' },
+    lazy: true,
+  })
+  
   const updateFilterInfo = () => {
     onUpdateFetchInfo(startDate, endDate, orgUnitID)
   }
   
-  const updateFacilityID = (ev) => {
-    let orgUnitID = ev.target.value
-    setOrgUnitID(orgUnitID)
-  }
-
-  const getDistricts = (ev) => {
-    let orgUnitID = ev.target.value
-    refetch({ orgUnitID: orgUnitID })
-    if(data){
-      setDistricts(data.results.children)
+  const updateOrgUnitLevel = (data) => {      
+      switch (orgUnitLevel) {
+        case 'Level-District':
+          setDistricts(data.results.children)
+          break;
+          case 'Level-SubDist':
+            setSubdistricts(data.results.children)
+            break;
+          case 'Level-Sector':
+            setSectors(data.results.children)
+            break;
+          case 'Level-Facility':
+            setFacilities(data.results.children)
+            break;    
+        default:
+          console.log("Got nothing...");
+          break;
     }
   }
 
-  const getSubDistricts = (ev) => {
-    let orgUnitID = ev.target.value
-    refetch({ orgUnitID: orgUnitID })
-    {data && setSubdistricts(data.results.children)}
-  }
-
-  const getSectors = (ev) => {
-    let orgUnitID = ev.target.value
-    refetch({ orgUnitID: orgUnitID })
-    {data && setSectors(data.results.children)}
-  }
-
-  const getFacilities = (ev) => {
-    let orgUnitID = ev.target.value
-    refetch({ orgUnitID: orgUnitID })
-    {data && setFacilities(data.results.children)}
-  }
-
+  // Updates the org unit levels when the query finishes fetching data.
+  useEffect(() => {
+    if (data) {
+      updateOrgUnitLevel(data)
+    }
+  }, [data])
+  
+  
   return (
     <div className='products'>
         <h1>{i18n.t('Tumour Data for Export')}</h1>
@@ -94,19 +86,23 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
                 <TableRowHead>
                     <TableCellHead>
                       <div className={styles.row}>
-                        {/* <p>{data.results.children}</p> */}
-                          <select className={styles.cbx} onChange={getDistricts} name="provselected">
+                          <select className={styles.cbx} onChange={ (ev) => {
+                            setOrgUnitLevel('Level-District' )
+                            refetch({ orgUnitID: ev.target.value})
+                          }} name="provselected">
                               <option value="0">Select Province...</option>
                               {provinces && provinces.map( (orgUnit) => (
                                  <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
                               ))}
-                               
                           </select>
                       </div>
                       </TableCellHead>
                       <TableCellHead>
                         <div className={styles.row}>
-                            <select className={styles.cbx} onChange={getSubDistricts} name="provselected">
+                            <select className={styles.cbx} onChange={(ev) => {
+                            setOrgUnitLevel('Level-SubDist')
+                            refetch({ orgUnitID: ev.target.value})
+                          }} name="provselected">
                                 <option value="0">Select District...</option>
                                 {districts && districts.map( (orgUnit) => (
                                  <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
@@ -116,7 +112,10 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
                       </TableCellHead>
                       <TableCellHead>
                         <div className={styles.row}>
-                            <select className={styles.cbx} onChange={getSectors} name="provselected">
+                            <select className={styles.cbx} onChange={(ev) => {
+                            setOrgUnitLevel('Level-Sector' )
+                            refetch({ orgUnitID: ev.target.value})
+                          }} name="provselected">
                                 <option value="0">Select Sub-District...</option>
                                 {subdistricts && subdistricts.map( (orgUnit) => (
                                  <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
@@ -126,7 +125,10 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
                       </TableCellHead>
                       <TableCellHead>
                         <div className={styles.row}>
-                            <select className={styles.cbx} onChange={getFacilities} name="provselected">
+                            <select className={styles.cbx} onChange={(ev) => {
+                            setOrgUnitLevel('Level-Facility' )
+                            refetch({ orgUnitID: ev.target.value})
+                          }} name="provselected">
                                 <option value="0">Select Sector...</option>
                                 {sectors && sectors.map( (orgUnit) => (
                                  <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
@@ -136,7 +138,7 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
                       </TableCellHead>
                       <TableCellHead>
                         <div className={styles.row}>
-                            <select className={styles.cbx} onChange={updateFacilityID} name="provselected">
+                            <select className={styles.cbx} onChange={()} name="provselected">
                                 <option value="0">Select Facility...</option>
                                 {facilities && facilities.map( (orgUnit) => (
                                  <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
