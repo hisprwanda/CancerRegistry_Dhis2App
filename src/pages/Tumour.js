@@ -205,7 +205,8 @@ export const Tumour = () => {
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="U6uTS5AuKQi"?formatPatientID(dataValue.value):"")}</TableCell>
                         <TableCell>{teiEvent.storedBy}</TableCell>
                         </TableRow>
-                        : "-"
+                        : 
+                        <TableRow key={teiEvent.event}></TableRow>
                     ))
                 ))
                 ))

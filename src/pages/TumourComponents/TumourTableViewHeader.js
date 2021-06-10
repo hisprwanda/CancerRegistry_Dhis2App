@@ -27,7 +27,7 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
   const [subdistricts, setSubdistricts] = useState([])
   const [sectors, setSectors] = useState([])
   const [facilities, setFacilities] = useState([])
-  
+  const [orgUnitID, setOrgUnitID] = useState('')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   
@@ -138,7 +138,7 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
                       </TableCellHead>
                       <TableCellHead>
                         <div className={styles.row}>
-                            <select className={styles.cbx} onChange={()} name="provselected">
+                            <select className={styles.cbx} onChange={(ev) => setOrgUnitID(ev.target.value)} name="provselected">
                                 <option value="0">Select Facility...</option>
                                 {facilities && facilities.map( (orgUnit) => (
                                  <option key={orgUnit.id} value={orgUnit.id}> { orgUnit.name } </option>
