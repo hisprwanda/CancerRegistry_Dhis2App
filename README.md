@@ -1,6 +1,6 @@
 # Cancer-Registry App
 
-![Cancer Registry Logo](src\public\CancerRegistryApp_logo.png)
+![Cancer Registry Logo](https://github.com/hisprwanda/CancerRegistry_Dhis2App/blob/main/src/public/CancerRegistryApp_logo.png)
 
 ## 1. Introduction
 
