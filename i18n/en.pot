@@ -5,16 +5,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2021-06-05T09:16:09.237Z\n"
-"PO-Revision-Date: 2021-06-05T09:16:09.237Z\n"
+"POT-Creation-Date: 2021-06-08T08:43:00.424Z\n"
+"PO-Revision-Date: 2021-06-08T08:43:00.424Z\n"
 
 msgid "Home"
 msgstr ""
 
-msgid "Tumour"
+msgid "Patient"
 msgstr ""
 
-msgid "Patient"
+msgid "Tumour"
 msgstr ""
 
 msgid "Source"

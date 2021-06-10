@@ -478,7 +478,7 @@ var bds1=pyear1+"-"+pdate1+"-"+pmonth1;
       const element = document.createElement("a");
       const file = new Blob([contacts], {type: 'text/plain;charset=utf-8'});
       element.href = URL.createObjectURL(file);
-      element.download = "sourceFile.txt";
+      element.download = "source_data.txt";
       document.body.appendChild(element); // Required for this to work in FireFox
       element.click();
       

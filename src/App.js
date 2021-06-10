@@ -35,7 +35,7 @@ const MyApp = () => (
                         // Home route, will render "Home" component
                         // when "/" is the current url
                         exact
-                        path="/"
+                        path="/home"
                         component={Home}
                     />
 
@@ -43,7 +43,7 @@ const MyApp = () => (
                         // Attributes route, will render "Attributes" component
                         // when "/attributes" is the current url
                         exact
-                        path="/patient"
+                        path="/"
                         component={Patient}
                     />
 

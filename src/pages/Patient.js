@@ -475,7 +475,7 @@ var bds1=pyear1+"-"+pdate1+"-"+pmonth1;
       const element = document.createElement("a");
       const file = new Blob([contacts], {type: 'text/plain;charset=utf-8'});
       element.href = URL.createObjectURL(file);
-      element.download = "myFile.txt";
+      element.download = "patient_data.txt";
       document.body.appendChild(element); // Required for this to work in FireFox
       element.click();
       
@@ -715,7 +715,7 @@ var bds1=pyear1+"-"+pdate1+"-"+pmonth1;
 
         return (
             <div className="products">
-                <h1>{i18n.t('Location Filter')}</h1>
+                <h1>Patient - {i18n.t('Location Filter')}</h1>
                 
 
                 <ReactFinalForm.Form onSubmit={this.myChangeHandler}>

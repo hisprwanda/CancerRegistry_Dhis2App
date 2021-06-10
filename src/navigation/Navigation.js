@@ -38,13 +38,14 @@ export const Navigation = () => (
 
         <NavigationItem
             // Menu item for the meta data page
-            label={i18n.t("Tumour")}
-            path="/tumour"
-        />
-        <NavigationItem
-            // Menu item for the meta data page
             label={i18n.t("Patient")}
             path="/patient"
+        />
+        
+        <NavigationItem
+            // Menu item for the meta data page
+            label={i18n.t("Tumour")}
+            path="/tumour"
         />
 
         <NavigationItem 
