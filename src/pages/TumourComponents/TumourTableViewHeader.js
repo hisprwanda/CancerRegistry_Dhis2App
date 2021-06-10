@@ -1,10 +1,8 @@
 import { Button, CircularLoader, InputField,Table, TableHead, TableCellHead, TableRowHead } from "@dhis2/ui";
-
-import { useDataQuery } from '@dhis2/app-runtime'
+import { useDataQuery, useAlert } from '@dhis2/app-runtime'
 import React, { useState, useEffect }  from "react";
 import styles from '../Form.module.css'
 import i18n from '../../locales/index.js'
-
 
 // Nyamata: R0kfMYExrnk
 // Butaro: OujzhM1lgN5
@@ -31,10 +29,21 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   
+  // A dynamic useDataQuery to fetch organization units
   const { data, refetch } = useDataQuery(orgUnitsQuery, {
     variables: { orgUnitID: 'Hjw70Lodtf2' },
     lazy: true,
   })
+
+  // A dynamic alert to communicate success or failure 
+    const { show } = useAlert(
+        ({ message }) => message,
+        ({ status }) => {
+            if (status === 'success') return { success: true }
+            else if (status === 'error') return { critical: true }
+            else return {}
+        }
+    )
   
   const updateFilterInfo = () => {
     onUpdateFetchInfo(startDate, endDate, orgUnitID)

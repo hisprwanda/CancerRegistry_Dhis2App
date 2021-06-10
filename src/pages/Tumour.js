@@ -1,4 +1,4 @@
-import { useDataQuery } from '@dhis2/app-runtime'
+import { useDataQuery, useAlert } from '@dhis2/app-runtime'
 import { Button, CircularLoader, InputField, Table, TableBody, TableCell, TableCellHead, TableHead, TableRow, TableRowHead } from "@dhis2/ui";
 
 import { TumourTableViewHeader } from './TumourComponents/TumourTableViewHeader'
@@ -34,20 +34,43 @@ const eventsQuery = {
 }
 
 export const Tumour = () => {
+    // A dynamic alert to communicate success or failure 
+    const { show } = useAlert(
+        ({ message }) => message,
+        ({ status }) => {
+            if (status === 'success') return { success: true }
+            else if (status === 'error') return { critical: true }
+            else return {}
+        } )
+
+    // A dynamic useDataQuery hook to retrieve tumor events data
     const { loading, error, data, refetch } = useDataQuery(eventsQuery, {
         variables: { page: 0, startDate: '2021-02-01', endDate: '2021-06-01', orgUnitID: 'OujzhM1lgN5' },
     })
 
-    if (error) { return <span>ERROR: {error.message}</span> }
+    if (error) {  
+        const message = 'ERROR: ' + error.message
+        show({ message, status: 'error' })
+        return (
+            <> </>
+        )
+    }
 
     if (loading) {
+        let provinces = []
         return (
             <>
-                <TumourTableViewHeader/>
+                <TumourTableViewHeader provinces={provinces}/>
                 <CircularLoader />
             </>
         )
     }
+
+    if (data.results.trackedEntityInstances) {  
+        const message = 'SUCCESS: Successfully retrieved tumor events.'
+        show({ message, status: 'success' })
+    }
+
 
     var RECS = "1", CHEC = "1", HIVSTATUS = "", DATEHIVTEST = "", AGE = "",ADDR= "",MPSEQ= "0",MPTOT= "",INCID= "",BAS= "",TOP= "",BEH= "",
     LATERALITY="",MOR="",I10="",ICCC="",GRDE="",STAGE="",T="",N="",M="",UPDATE="20210605",OBSOLETEFLAGTUMOURTABLE="0",TUMOURID= "",PATIENTIDTUMOURTABLE= "",PATIENTRECORDIDTUMOURTABLE="",TUMOURUPDATEDBY="",TUMOURUNDUPLICATIONSTATUS="",INITIALT="",INTENTT="",SGRY="",DATES="",CHEMO="",STARTC="",ENDCHEMO="",IMMUNO="",STARTI="",ENDIMMUNO="",HPVASS="",RADIO="",STARTR="",ENDRADIO="",HORMO="",STARTH="",ENDHORMO="",PALLIA="",DATEP="",OTHERT="",SPECIFYOT="",STARTOT="",ENDOT="";
@@ -169,13 +192,7 @@ export const Tumour = () => {
                 <TableCellHead>BAS</TableCellHead>
                 <TableCellHead>TOP</TableCellHead>
                 <TableCellHead>BEH</TableCellHead>
-               <TableCellHead>LATERALITY</TableCellHead>
-                <TableCellHead>ICCC</TableCellHead>
-                <TableCellHead>GRDE</TableCellHead>
-                <TableCellHead>STAGE</TableCellHead>
-                <TableCellHead>UPDATE</TableCellHead>
                 <TableCellHead>PATIENTIDTUMOURTABLE</TableCellHead>
-                <TableCellHead>TUMOURUPDATEDBY</TableCellHead>
                 </TableRowHead>
             </TableHead>
             <TableBody>
@@ -196,14 +213,8 @@ export const Tumour = () => {
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="qiPi86HJH9D"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="b4nlCulDaNv"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="VahotmishoD"?dataValue.value:"")}</TableCell>
-                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="R3V4FZ7bm1Z"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="pUcbnDZTKWO"?dataValue.value:"")}</TableCell>
-                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="g4InB94akRh"?dataValue.value:"")}</TableCell>
-                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="MiCTO3OgRB8"?dataValue.value:"")}</TableCell>
-                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="lsyoWxLKpcg"?dataValue.value:"")}</TableCell>
-                        <TableCell>20210605</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="U6uTS5AuKQi"?formatPatientID(dataValue.value):"")}</TableCell>
-                        <TableCell>{teiEvent.storedBy}</TableCell>
                         </TableRow>
                         : 
                         <TableRow key={teiEvent.event}></TableRow>
