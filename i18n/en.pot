@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2021-06-08T08:43:00.424Z\n"
-"PO-Revision-Date: 2021-06-08T08:43:00.424Z\n"
+"POT-Creation-Date: 2021-06-11T10:27:49.833Z\n"
+"PO-Revision-Date: 2021-06-11T10:27:49.833Z\n"
 
 msgid "Home"
 msgstr ""
@@ -38,10 +38,16 @@ msgstr ""
 msgid "Use the left menu to view, filter and export data to"
 msgstr ""
 
-msgid "Location Filter"
+msgid "Download Patient Data"
 msgstr ""
 
-msgid "Source Location Filter"
+msgid "Patient Data for Export"
+msgstr ""
+
+msgid "Download Source Data"
+msgstr ""
+
+msgid "Source Data for Export"
 msgstr ""
 
 msgid "Download Tumour Data"

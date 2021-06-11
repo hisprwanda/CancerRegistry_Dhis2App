@@ -3,7 +3,6 @@ import { Button, CircularLoader, InputField, Table, TableBody, TableCell, TableC
 
 import { SourceTableViewHeader } from './SourceComponents/SourceTableViewHeader'
 import React, { useState } from 'react'
-import i18n from '../locales/index.js'
 
 import { TumourTableView } from './TumourComponents/TumourTableView'
 import { PaginationControls } from './SourceComponents/PaginationControls'
@@ -112,39 +111,12 @@ trackedEntityInstances.map((itemp) => {
           {
               evts.dataValues.map(function(dtvalues, i){
           
-<<<<<<< HEAD
           if(dtvalues.dataElement=="WEMqZvXK07I")
           {
               //console.log(dtvalues.value);
               tumor_src=dtvalues.value;
-=======
-            if(itm.attribute=="PTGSZmTk3IQ")
-          {
-            tumourid_src_table=itm.value;
-            var strFirstThree = tumourid_src_table.substring(0,2);
-      
-            var regnolength=tumourid_src_table.toString().length
-            
-            if(regnolength=="9")
-            {
-            
-                tumourid_src_table=tumourid_src_table.substring(1,9)+"0101"; 
-                source_record_id=tumourid_src_table+"01";
-            
-            }
-      
-            if(strFirstThree=="CR")
-            {
-              var n1=tumourid_src_table.substring(5,8);
-              var n2=tumourid_src_table.substring(9,14);
-              aregno=n1+n2+"0101"; 
-              source_record_id=aregno+"01";
-              tumourid_src_table=aregno;
-            }
->>>>>>> 71519ca50f34bff2ca8ea4a4fb3d80caf88d11f0
           }
           
-<<<<<<< HEAD
           if(dtvalues.dataElement=="v9h8LhYlF2k")
           {
               //console.log(dtvalues.value);
@@ -164,31 +136,6 @@ trackedEntityInstances.map((itemp) => {
           {
               //console.log(dtvalues.value);
               var dats=dtvalues.value;
-=======
-               contacts=contacts+'\n'+fullstring;
-      
-      })
-      
-      if(!(tumourid_src_table==""))
-      {
-      const element = document.createElement("a");
-      const file = new Blob([contacts], {type: 'text/plain;charset=utf-8'});
-      element.href = URL.createObjectURL(file);
-      element.download = "source_data.txt";
-      document.body.appendChild(element); // Required for this to work in FireFox
-      element.click();
-      
-      }
-      
-            
-         
-       }
-      
-
-
-
-
->>>>>>> 71519ca50f34bff2ca8ea4a4fb3d80caf88d11f0
 
               var pyear=dats.substring(0,4);
               var pmonth=dats.substring(5,7);
@@ -348,12 +295,6 @@ element.click();
 
 
 
-<<<<<<< HEAD
-=======
-        return (
-            <div className="products">
-                <h1>{i18n.t('Source Location Filter')}</h1>
->>>>>>> 71519ca50f34bff2ca8ea4a4fb3d80caf88d11f0
 
 
 

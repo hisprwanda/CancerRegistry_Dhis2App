@@ -1,9 +1,5 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import { Button, CircularLoader, InputField, Table, TableBody, TableCell, TableCellHead, TableHead, TableRow, TableRowHead } from "@dhis2/ui";
-import {BaseUrlTest} from './BaseUrlTest'
-import i18n from '../locales/index'
-
-
 
 import { PatientTableViewHeader } from './PatientComponents/PatientTableViewHeader'
 import React, { useState } from 'react'
@@ -314,25 +310,6 @@ trackedEntityInstances.map((itemp) => {
         }
       
       })
-<<<<<<< HEAD
-=======
-      
-      if(!(aregno==""))
-      {
-      const element = document.createElement("a");
-      const file = new Blob([contacts], {type: 'text/plain;charset=utf-8'});
-      element.href = URL.createObjectURL(file);
-      element.download = "patient_data.txt";
-      document.body.appendChild(element); // Required for this to work in FireFox
-      element.click();
-      
-      }
-      
-            
-         
-       }
-      
->>>>>>> 71519ca50f34bff2ca8ea4a4fb3d80caf88d11f0
 
 //finalizing the declaration and map the values into one single variable so that it can be exported in a file
    
@@ -395,44 +372,12 @@ element.click();
 
     return (
 
-<<<<<<< HEAD
         <div className={classes.tableContainer}>
           <div className='products'>
             <PatientTableViewHeader onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
             
             
             <Table>
-=======
-        this.setState({frdate: date});
-      };
-      handleChange1 = (date) => {
-        // const valueOfInput = this.state.date  <--- I want string with date here
-        console.log('this.state.date',this.state.enddate);
-        this.setState({enddate: date});
-      };
-
-    
-         
-      
-
-    render() {
-        var a = 0
-       
-
-        return (
-            <div className="products">
-                <h1>Patient - {i18n.t('Location Filter')}</h1>
-                
-
-                <ReactFinalForm.Form onSubmit={this.myChangeHandler}>
-                    {({ handleSubmit }) => (
-                        <form onSubmit={handleSubmit}>
-
-                                   
-
-
-                       <Table>
->>>>>>> 71519ca50f34bff2ca8ea4a4fb3d80caf88d11f0
                                 <TableHead>
                                     <TableRowHead>
                                         <TableCellHead className={styles.leftcell}>
