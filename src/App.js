@@ -7,7 +7,8 @@ import { Home, Tumour, DataFilter, Reports, NoMatch, Patient,Source } from './pa
 
 
 const MyApp = () => (
-    <BrowserRouter
+    <BrowserRouter basename="/oncology/api/apps/Cancer-Registry/index.html#"
+
     // This Router will use the browser history.
     // If older browsers need to be supported,
     // then the `HashRouter` can be used
@@ -33,7 +34,7 @@ const MyApp = () => (
                         // Home route, will render "Home" component
                         // when "/" is the current url
                         exact
-                        path="/"
+                        path="/home"
                         component={Home}
                     />
 
@@ -41,7 +42,7 @@ const MyApp = () => (
                         // Attributes route, will render "Attributes" component
                         // when "/attributes" is the current url
                         exact
-                        path="/patient"
+                        path="/"
                         component={Patient}
                     />
 

@@ -2,6 +2,8 @@ import { PropTypes } from '@dhis2/prop-types'
 import { Menu, MenuItem } from '@dhis2/ui'
 import React from 'react'
 import { useHistory, useRouteMatch } from 'react-router-dom'
+import i18n from '../locales/index.js'
+
 
 import '../components/Navbar.css'
 
@@ -30,28 +32,33 @@ export const Navigation = () => (
     <Menu className="navbar">
         <NavigationItem
             // Menu item for the home page
-            label="Home"
-            path="/"
+            label={i18n.t("Home")}
+            path="/home"
         />
 
         <NavigationItem
             // Menu item for the meta data page
-            label="Tumour"
-            path="/tumour"
-        />
-        <NavigationItem
-            // Menu item for the meta data page
-            label="Patient"
+            label={i18n.t("Patient")}
             path="/patient"
         />
+        
+        <NavigationItem
+            // Menu item for the meta data page
+            label={i18n.t("Tumour")}
+            path="/tumour"
+        />
 
-        <NavigationItem label="Source" path="/source" />
+        <NavigationItem 
+            label={i18n.t("Source")}
+            path="/source" 
+        />
+
         <NavigationItem
             // Menu item for the FAQ page
-            label="Data Filter"
+            label={i18n.t("Data Filter")}
             path="/dataFilter"
         />
 
-        <NavigationItem label="Reports" path="/reports" />
+        <NavigationItem label={i18n.t("Reports")} path="/reports" />
     </Menu>
 )
