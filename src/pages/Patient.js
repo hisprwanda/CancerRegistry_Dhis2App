@@ -1,10 +1,9 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import { Button, CircularLoader, InputField, Table, TableBody, TableCell, TableCellHead, TableHead, TableRow, TableRowHead } from "@dhis2/ui";
 
-import { PatientTableViewHeader } from './PatientComponents/PatientTableViewHeader'
+import { DataFilterHeaderView } from './DataFilterHeaderView'
 import React, { useState } from 'react'
 
-import { TumourTableView } from './TumourComponents/TumourTableView'
 import { PaginationControls } from './TumourComponents/PaginationControls'
 import * as classes from '../App.module.css'
 import i18n from "../locales/index.js";
@@ -44,7 +43,7 @@ export const Patient = () => {
     if (loading) {
         return (
             <>
-                <PatientTableViewHeader/>
+                <DataFilterHeaderView/>
                 <CircularLoader />
             </>
         )
@@ -353,7 +352,7 @@ if(!(aregno==""))
 const element = document.createElement("a");
 const file = new Blob([contacts], {type: 'text/plain;charset=utf-8'});
 element.href = URL.createObjectURL(file);
-element.download = "myFile.txt";
+element.download = "patient_data.txt";
 document.body.appendChild(element); // Required for this to work in FireFox
 element.click();
 
@@ -374,7 +373,7 @@ element.click();
 
         <div className={classes.tableContainer}>
           <div className='products'>
-            <PatientTableViewHeader onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
+            <DataFilterHeaderView onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
             
             
             <Table>

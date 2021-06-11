@@ -1,10 +1,9 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import { Button, CircularLoader, InputField, Table, TableBody, TableCell, TableCellHead, TableHead, TableRow, TableRowHead } from "@dhis2/ui";
 
-import { SourceTableViewHeader } from './SourceComponents/SourceTableViewHeader'
+import { DataFilterHeaderView } from './DataFilterHeaderView'
 import React, { useState } from 'react'
 
-import { TumourTableView } from './TumourComponents/TumourTableView'
 import { PaginationControls } from './SourceComponents/PaginationControls'
 import * as classes from '../App.module.css'
 import i18n from "../locales/index.js";
@@ -44,7 +43,7 @@ export const Source = () => {
     if (loading) {
         return (
             <>
-                <SourceTableViewHeader/>
+                <DataFilterHeaderView/>
                 <CircularLoader />
             </>
         )
@@ -286,7 +285,7 @@ if(!(tumourid_src_table==""))
 const element = document.createElement("a");
 const file = new Blob([contacts], {type: 'text/plain;charset=utf-8'});
 element.href = URL.createObjectURL(file);
-element.download = "sourceFile.txt";
+element.download = "source_data.txt";
 document.body.appendChild(element); // Required for this to work in FireFox
 element.click();
 
@@ -313,7 +312,7 @@ element.click();
 
         <div className={classes.tableContainer}>
           <div className='products'>
-            <SourceTableViewHeader onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
+            <DataFilterHeaderView onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
             
             
             <Table>

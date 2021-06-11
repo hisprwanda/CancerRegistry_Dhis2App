@@ -1,13 +1,13 @@
 import { useDataQuery, useAlert } from '@dhis2/app-runtime'
 import { Button, CircularLoader, InputField, Table, TableBody, TableCell, TableCellHead, TableHead, TableRow, TableRowHead } from "@dhis2/ui";
 
-import { TumourTableViewHeader } from './TumourComponents/TumourTableViewHeader'
+import { DataFilterHeaderView } from './DataFilterHeaderView'
 import React, { useState } from 'react'
 
-import { TumourTableView } from './TumourComponents/TumourTableView'
 import { PaginationControls } from './TumourComponents/PaginationControls'
 import * as classes from '../App.module.css'
 import i18n from "../locales/index.js";
+import styles from './Form.module.css'
 
 
 const eventsQuery = {
@@ -60,7 +60,7 @@ export const Tumour = () => {
         let provinces = []
         return (
             <>
-                <TumourTableViewHeader provinces={provinces}/>
+                <DataFilterHeaderView provinces={provinces}/>
                 <CircularLoader />
             </>
         )
@@ -173,9 +173,20 @@ export const Tumour = () => {
 
         <div className={classes.tableContainer}>
           <div className='products'>
-            <TumourTableViewHeader onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
-            <Button primary onClick={() => {exportTSVFile(data.results.trackedEntityInstances)}}>{i18n.t('Download Tumour Data')} </Button>
-
+            <DataFilterHeaderView onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
+            <Table>
+                <TableHead>
+                    <TableRowHead>
+                        <TableCellHead className={styles.leftcell}>
+                            <div className={styles.row}>
+                                <div className={styles.downloadfiles}>
+                                    <Button primary onClick={() => {exportTSVFile(data.results.trackedEntityInstances)}}>{i18n.t('Download Patient Data')} </Button>
+                                </div>
+                            </div>
+                        </TableCellHead>
+                    </TableRowHead>
+                </TableHead>
+            </Table>
             <Table>
             <TableHead>
                 <TableRowHead>

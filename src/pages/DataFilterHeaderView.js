@@ -1,8 +1,12 @@
 import { Button, CircularLoader, InputField,Table, TableHead, TableCellHead, TableRowHead } from "@dhis2/ui";
-import { useDataQuery, useAlert } from '@dhis2/app-runtime'
+
+import { useDataQuery } from '@dhis2/app-runtime'
 import React, { useState, useEffect }  from "react";
-import styles from '../Form.module.css'
-import i18n from '../../locales/index.js'
+import styles from './Form.module.css'
+import i18n from "../locales/index.js";
+
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 // Nyamata: R0kfMYExrnk
 // Butaro: OujzhM1lgN5
@@ -17,7 +21,7 @@ const orgUnitsQuery = {
     },
 }
 
-export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
+export const DataFilterHeaderView = ({onUpdateFetchInfo, provinces}) => {
   
   // Component's states
   const [orgUnitLevel, setOrgUnitLevel] = useState('')
@@ -29,21 +33,10 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   
-  // A dynamic useDataQuery to fetch organization units
   const { data, refetch } = useDataQuery(orgUnitsQuery, {
     variables: { orgUnitID: 'Hjw70Lodtf2' },
     lazy: true,
   })
-
-  // A dynamic alert to communicate success or failure 
-    const { show } = useAlert(
-        ({ message }) => message,
-        ({ status }) => {
-            if (status === 'success') return { success: true }
-            else if (status === 'error') return { critical: true }
-            else return {}
-        }
-    )
   
   const updateFilterInfo = () => {
     onUpdateFetchInfo(startDate, endDate, orgUnitID)
@@ -79,17 +72,29 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
   
   return (
     <div className='products'>
-        <h1>{i18n.t('Tumour Data for Export')}</h1>
-        <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '40%' }} className={styles.row}>
-            <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '30%' }}>
-              <InputField label="From" type="date" value={startDate} onChange={({ value }) => setStartDate(value)} />
-            </div>
-            <div style={{ border: '1px solid #c4c9cc', padding: 8, width: '30%' }}>
-              <InputField label="To" type="date" value={endDate} onChange={({ value }) => setEndDate(value)} />
-            </div>
-        </div>
+        <h1>{i18n.t('Data for Export')}</h1>
 
-        <div style={{ width: '30%' }}>
+
+        <Table>
+          <TableHead>
+              <TableRowHead>
+                  <TableCellHead className={styles.leftcell}>
+                      <div className={styles.row}>
+                          <div className={styles.downloadfiles}>
+                          <div className={styles.leftmargin}>
+                          Start Date
+                          <InputField label="From" type="date" value={startDate} onChange={({ value }) => setStartDate(value)} />
+                          </div>
+                              <div className={styles.leftmarginsecond}> End Date
+                                <InputField label="To" type="date" value={endDate} onChange={({ value }) => setEndDate(value)} />
+                          </div>
+                          </div>
+                        </div>
+                    </TableCellHead>
+                </TableRowHead>
+            </TableHead>
+        </Table>
+
           <Table >
             <TableHead>
                 <TableRowHead>
@@ -155,12 +160,15 @@ export const TumourTableViewHeader = ({onUpdateFetchInfo, provinces}) => {
                             </select>
                         </div>
                       </TableCellHead>
+
+                      <TableCellHead>
+                        <div className={styles.row}>
+                        <Button primary onClick={updateFilterInfo}>Filter </Button>
+                        </div>
+                      </TableCellHead>
                     </TableRowHead>
                 </TableHead>
-            </Table>
-         </div>         
-         <Button primary onClick={updateFilterInfo}>Filter </Button>     
+            </Table>   
     </div>
   )
 }
-
