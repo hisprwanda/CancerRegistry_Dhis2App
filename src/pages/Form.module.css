@@ -32,14 +32,21 @@
 }
 .leftmargin {
     text-align: center;
-    margin-left: 280px;
+    margin-left: 80px;
 }
 .leftmarginsecond {
     text-align: center;
-    margin-left: 130px;
+    margin-left: 50px;
 }
 .leftcell {
     text-align: center;
    
+}
+.downloadfiles{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
