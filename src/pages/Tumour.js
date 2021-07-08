@@ -72,10 +72,10 @@ export const Tumour = () => {
     }
 
 
-    var RECS = "1", CHEC = "1", HIVSTATUS = "", DATEHIVTEST = "", AGE = "",ADDR= "",MPSEQ= "0",MPTOT= "",INCID= "",BAS= "",TOP= "",BEH= "",
+    var RECS = "1", CHEC = "1", HIVSTATUS = "", DATEHIVTEST = "", AGE = "",ADDR= "",SECTOR= "",	CELL= "", VILLAGE="", MPCODE="", MPSEQ= "0",MPTOT= "",INCID= "",BAS= "",TOP= "",BEH= "",
     LATERALITY="",MOR="",I10="",ICCC="",GRDE="",STAGE="",T="",N="",M="",UPDATE="20210605",OBSOLETEFLAGTUMOURTABLE="0",TUMOURID= "",PATIENTIDTUMOURTABLE= "",PATIENTRECORDIDTUMOURTABLE="",TUMOURUPDATEDBY="",TUMOURUNDUPLICATIONSTATUS="",INITIALT="",INTENTT="",SGRY="",DATES="",CHEMO="",STARTC="",ENDCHEMO="",IMMUNO="",STARTI="",ENDIMMUNO="",HPVASS="",RADIO="",STARTR="",ENDRADIO="",HORMO="",STARTH="",ENDHORMO="",PALLIA="",DATEP="",OTHERT="",SPECIFYOT="",STARTOT="",ENDOT="";
 
-    const tumourTableHeaders = "RECS"+"\t"+"CHEC"+"\t"+"HIVSTATUS"+"\t"+"DATEHIVTEST"+"\t"+"AGE"+"\t"+"ADDR"+"\t"+"MPSEQ"+"\t"+"MPTOT"+"\t"+"INCID"+"\t"+"BAS"+"\t"+"TOP"+"\t"+"BEH"+"\t"+
+    const tumourTableHeaders = "RECS"+"\t"+"CHEC"+"\t"+"HIVSTATUS"+"\t"+"DATEHIVTEST"+"\t"+"AGE"+"\t"+"ADDR"+"\t"+"SECTOR"+"\t"+"CELL"+"\t"+"VILLAGE"+"\t"+"MPCODE"+"\t"+"MPSEQ"+"\t"+"MPTOT"+"\t"+"INCID"+"\t"+"BAS"+"\t"+"TOP"+"\t"+"BEH"+"\t"+
             "LATERALITY"+"\t"+"MOR"+"\t"+"I10"+"\t"+"ICCC"+"\t"+"GRDE"+"\t"+"STAGE"+"\t"+"T"+"\t"+"N"+"\t"+"M"+"\t"+"UPDATE"+"\t"+"OBSOLETEFLAGTUMOURTABLE"+"\t"+"TUMOURID"+"\t"+"PATIENTIDTUMOURTABLE"+"\t"+"PATIENTRECORDIDTUMOURTABLE"+"\t"+"TUMOURUPDATEDBY"+"\t"+"TUMOURUNDUPLICATIONSTATUS"+"\t"+"INITIALT"+"\t"+"INTENTT"+"\t"+"SGRY"+"\t"+"DATES"+"\t"+"CHEMO"+"\t"+"STARTC"+"\t"+"ENDCHEMO"+"\t"+"IMMUNO"+"\t"+"STARTI"+"\t"+"ENDIMMUNO"+"\t"+"HPVASS"+"\t"+"RADIO"+"\t"+"STARTR"+"\t"+"ENDRADIO"+"\t"+"HORMO"+"\t"+"STARTH"+"\t"+"ENDHORMO"+"\t"+"PALLIA"+"\t"+"DATEP"+"\t"+"OTHERT"+"\t"+"SPECIFYOT"+"\t"+"STARTOT"+"\t"+"ENDOT";
     var tumourTableData = tumourTableHeaders;
 
@@ -98,16 +98,21 @@ export const Tumour = () => {
                     if(dataValue.dataElement == "XBZsBO1iIMu") { HIVSTATUS = dataValue.value }
                     if(dataValue.dataElement == "w3hjoxhRdxX") { DATEHIVTEST = dataValue.value }
                     if(dataValue.dataElement == "Lklmhjoa2VZ") { AGE = dataValue.value }
-                    if(dataValue.dataElement == "Yiplgepu9rQ") { ADDR = dataValue.value }
+                    if(dataValue.dataElement == "YjyatbcXrAB") { ADDR = dataValue.value }
+                    if(dataValue.dataElement == "R7C6qavR1By") { SECTOR = dataValue.value }
+                    if(dataValue.dataElement == "JoiKTef007f") { CELL = dataValue.value }
+                    if(dataValue.dataElement == "hNjuN29oWEo") { VILLAGE = dataValue.value }
                     if(dataValue.dataElement == "QsbsNHyRwcu") { MPTOT = dataValue.value }
                     if(dataValue.dataElement == "qiPi86HJH9D") { INCID = dataValue.value }
                     if(dataValue.dataElement == "b4nlCulDaNv") { BAS = dataValue.value }
-                    if(dataValue.dataElement == "VahotmishoD") { TOP = dataValue.value }
+                    if(dataValue.dataElement == "mIGq36ORtj5") { TOP = dataValue.value }
                     if(dataValue.dataElement == "R3V4FZ7bm1Z") { BEH = dataValue.value }
                     if(dataValue.dataElement == "pUcbnDZTKWO") { LATERALITY = dataValue.value }
                     if(dataValue.dataElement == "g4InB94akRh") { MOR = dataValue.value }
                     if(dataValue.dataElement == "MiCTO3OgRB8") { GRDE = dataValue.value }
-                    if(dataValue.dataElement == "lsyoWxLKpcg") { STAGE = dataValue.value }
+                    if(dataValue.dataElement == "lsyoWxLKpcg") { 
+                        dataValue.value == "Unkwown"? STAGE = "XX" : STAGE = dataValue.value 
+                    }
                     if(dataValue.dataElement == "jufaPpTt33C") { T = dataValue.value }
                     if(dataValue.dataElement == "crCh4AWyhEQ") { N = dataValue.value }
                     if(dataValue.dataElement == "YU85aZgUvpI") { M = dataValue.value }
@@ -141,7 +146,7 @@ export const Tumour = () => {
                     if(dataValue.dataElement == "tfeZgkgqJC9") { SPECIFYOT = dataValue.value }
 
                 });
-                var tumourTableRow = RECS+"\t"+CHEC+"\t"+HIVSTATUS+"\t"+DATEHIVTEST+"\t"+AGE+"\t"+ADDR+"\t"+MPSEQ+"\t"+MPTOT+"\t"+INCID+"\t"+BAS+"\t"+TOP+"\t"+BEH+"\t"+
+                var tumourTableRow = RECS+"\t"+CHEC+"\t"+HIVSTATUS+"\t"+DATEHIVTEST+"\t"+AGE+"\t"+ADDR+"\t"+SECTOR+"\t"+CELL+"\t"+VILLAGE+"\t"+MPCODE+"\t"+MPSEQ+"\t"+MPTOT+"\t"+INCID+"\t"+BAS+"\t"+TOP+"\t"+BEH+"\t"+
                         LATERALITY+"\t"+MOR+"\t"+I10+"\t"+ICCC+"\t"+GRDE+"\t"+STAGE+"\t"+T+"\t"+N+"\t"+M+"\t"+UPDATE+"\t"+OBSOLETEFLAGTUMOURTABLE+"\t"+TUMOURID+"\t"+PATIENTIDTUMOURTABLE+"\t"+PATIENTRECORDIDTUMOURTABLE+"\t"+
                         TUMOURUPDATEDBY+"\t"+TUMOURUNDUPLICATIONSTATUS+"\t"+INITIALT+"\t"+INTENTT+"\t"+SGRY+"\t"+DATES+"\t"+CHEMO+"\t"+STARTC+"\t"+ENDCHEMO+"\t"+IMMUNO+"\t"+STARTI+"\t"+ENDIMMUNO+"\t"+HPVASS+"\t"+RADIO+"\t"+
                         STARTR+"\t"+ENDRADIO+"\t"+HORMO+"\t"+STARTH+"\t"+ENDHORMO+"\t"+PALLIA+"\t"+DATEP+"\t"+OTHERT+"\t"+SPECIFYOT+"\t"+STARTOT+"\t"+ENDOT;
@@ -180,7 +185,7 @@ export const Tumour = () => {
                         <TableCellHead className={styles.leftcell}>
                             <div className={styles.row}>
                                 <div className={styles.downloadfiles}>
-                                    <Button primary onClick={() => {exportTSVFile(data.results.trackedEntityInstances)}}>{i18n.t('Download Patient Data')} </Button>
+                                    <Button primary onClick={() => {exportTSVFile(data.results.trackedEntityInstances)}}>{i18n.t('Download Tumour Data')} </Button>
                                 </div>
                             </div>
                         </TableCellHead>
@@ -197,7 +202,7 @@ export const Tumour = () => {
                 <TableCellHead>ADDR</TableCellHead>
                 <TableCellHead>SECTOR</TableCellHead>
                 <TableCellHead>CELL</TableCellHead>
-                <TableCellHead>MPSEQ</TableCellHead>
+                <TableCellHead>Village</TableCellHead>
                 <TableCellHead>MPTOT</TableCellHead>
                 <TableCellHead>INCID</TableCellHead> 
                 <TableCellHead>BAS</TableCellHead>
@@ -216,14 +221,14 @@ export const Tumour = () => {
                         <TableCell>1</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="XBZsBO1iIMu"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="Lklmhjoa2VZ"?dataValue.value:"")}</TableCell>
-                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="Yiplgepu9rQ"?dataValue.value:"")}</TableCell>
-                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="HnxmesFVHIl"?dataValue.value:"")}</TableCell>
-                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="JC6EUMrVCUN"?dataValue.value:"")}</TableCell>
-                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="WWsELkuJMbi"?dataValue.value:"")}</TableCell>
+                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="YjyatbcXrAB"?dataValue.value:"")}</TableCell>
+                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="R7C6qavR1By"?dataValue.value:"")}</TableCell>
+                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="JoiKTef007f"?dataValue.value:"")}</TableCell>
+                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="hNjuN29oWEo"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="QsbsNHyRwcu"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="qiPi86HJH9D"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="b4nlCulDaNv"?dataValue.value:"")}</TableCell>
-                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="VahotmishoD"?dataValue.value:"")}</TableCell>
+                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="mIGq36ORtj5"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="pUcbnDZTKWO"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="U6uTS5AuKQi"?formatPatientID(dataValue.value):"")}</TableCell>
                         </TableRow>
