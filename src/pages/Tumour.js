@@ -17,7 +17,7 @@ const eventsQuery = {
             page: page,
             ou: orgUnitID,
             program: 'rx6V962E4XM',
-            fields: ['attributes[attribute,value],enrollments[events[storedBy,event,programStage,dataValues[dataElement,value]]]'],
+            fields: ['attributes[attribute,value],enrollments[trackedEntityInstance,enrollment,events[storedBy,event,programStage,dataValues[dataElement,value]]]'],
             programStartDate:startDate,
             programEndDate:endDate,
             totalPages: true,
@@ -45,7 +45,7 @@ export const Tumour = () => {
 
     // A dynamic useDataQuery hook to retrieve tumor events data
     const { loading, error, data, refetch } = useDataQuery(eventsQuery, {
-        variables: { page: 0, startDate: '2018-01-01', endDate: '2021-07-15', orgUnitID: 'Hjw70Lodtf2' },
+        variables: { page: 0, startDate: '2018-01-01', endDate: '2021-07-17', orgUnitID: 'Hjw70Lodtf2' },
     })
 
     if (error) {  
@@ -72,13 +72,12 @@ export const Tumour = () => {
     }
 
 
-    var RECS = "1", CHEC = "1", HIVSTATUS = "", DATEHIVTEST = "", AGE = "",ADDR= "",SECTOR= "",	CELL= "", VILLAGE="", MPCODE="", MPSEQ= "0",MPTOT= "",INCID= "",BAS= "",TOP= "",BEH= "",
+    let RECS = "1", CHEC = "1", HIVSTATUS = "", DATEHIVTEST = "", AGE = "",ADDR= "",SECTOR= "",	CELL= "", VILLAGE="", MPCODE="", MPSEQ= "",MPTOT= "",INCID= "",BAS= "",TOP= "",BEH= "",
     LATERALITY="",MOR="",I10="",ICCC="",GRDE="",STAGE="",T="",N="",M="",UPDATE="20210605",OBSOLETEFLAGTUMOURTABLE="0",TUMOURID= "",PATIENTIDTUMOURTABLE= "",PATIENTRECORDIDTUMOURTABLE="",TUMOURUPDATEDBY="",TUMOURUNDUPLICATIONSTATUS="",INITIALT="",INTENTT="",SGRY="",DATES="",CHEMO="",STARTC="",ENDCHEMO="",IMMUNO="",STARTI="",ENDIMMUNO="",HPVASS="",RADIO="",STARTR="",ENDRADIO="",HORMO="",STARTH="",ENDHORMO="",PALLIA="",DATEP="",OTHERT="",SPECIFYOT="",STARTOT="",ENDOT="";
 
     const tumourTableHeaders = "RECS"+"\t"+"CHEC"+"\t"+"HIVSTATUS"+"\t"+"DATEHIVTEST"+"\t"+"AGE"+"\t"+"ADDR"+"\t"+"SECTOR"+"\t"+"CELL"+"\t"+"VILLAGE"+"\t"+"MPCODE"+"\t"+"MPSEQ"+"\t"+"MPTOT"+"\t"+"INCID"+"\t"+"BAS"+"\t"+"TOP"+"\t"+"BEH"+"\t"+
             "LATERALITY"+"\t"+"MOR"+"\t"+"I10"+"\t"+"ICCC"+"\t"+"GRDE"+"\t"+"STAGE"+"\t"+"T"+"\t"+"N"+"\t"+"M"+"\t"+"UPDATE"+"\t"+"OBSOLETEFLAGTUMOURTABLE"+"\t"+"TUMOURID"+"\t"+"PATIENTIDTUMOURTABLE"+"\t"+"PATIENTRECORDIDTUMOURTABLE"+"\t"+"TUMOURUPDATEDBY"+"\t"+"TUMOURUNDUPLICATIONSTATUS"+"\t"+"INITIALT"+"\t"+"INTENTT"+"\t"+"SGRY"+"\t"+"DATES"+"\t"+"CHEMO"+"\t"+"STARTC"+"\t"+"ENDCHEMO"+"\t"+"IMMUNO"+"\t"+"STARTI"+"\t"+"ENDIMMUNO"+"\t"+"HPVASS"+"\t"+"RADIO"+"\t"+"STARTR"+"\t"+"ENDRADIO"+"\t"+"HORMO"+"\t"+"STARTH"+"\t"+"ENDHORMO"+"\t"+"PALLIA"+"\t"+"DATEP"+"\t"+"OTHERT"+"\t"+"SPECIFYOT"+"\t"+"STARTOT"+"\t"+"ENDOT";
-    var tumourTableData = tumourTableHeaders;
-
+    
     const formatPatientID = (oldID) => {
         var newID
         if (oldID.length == 9) { 
@@ -93,80 +92,88 @@ export const Tumour = () => {
 
 
     const exportTSVFile = (trackedEntityInstances) =>{
-        
+        let tumourTableData = tumourTableHeaders;
+
         trackedEntityInstances.map((tei) => {
-            
-            // filling TUMOURID, PATIENTIDTUMOURTABLE, and PATIENTRECORDIDTUMOURTABLE using patient unique ID
+            let uniqueId = ''
+            let tumourCounts = 0
+            let tumourEvents = []
             tei.attributes.map((item) => {
-                let uniqueId = ''
                 if (item.attribute == 'PTGSZmTk3IQ') {
                     uniqueId = formatPatientID(item.value)
-                    TUMOURID = uniqueId + "0101";
-                    PATIENTIDTUMOURTABLE = uniqueId;
-                    PATIENTRECORDIDTUMOURTABLE = uniqueId +"01";
                 }
             })
-
-            // Filling the rest of the tumor table fields
+            
+            // Getting the number of Tumour  stage events present in the current enrollment
             tei.enrollments.map((enrollment) => {
                 enrollment.events.map((teiEvent) => {
                     if(teiEvent.programStage=="Y0cWLBEdXzb"){
-                    teiEvent.dataValues.map((dataValue) =>{
-                        if(dataValue.dataElement == "XBZsBO1iIMu") { HIVSTATUS = dataValue.value }
-                        if(dataValue.dataElement == "w3hjoxhRdxX") { DATEHIVTEST = dataValue.value }
-                        if(dataValue.dataElement == "Lklmhjoa2VZ") { AGE = dataValue.value }
-                        if(dataValue.dataElement == "YjyatbcXrAB") { ADDR = dataValue.value }
-                        if(dataValue.dataElement == "R7C6qavR1By") { SECTOR = dataValue.value }
-                        if(dataValue.dataElement == "JoiKTef007f") { CELL = dataValue.value }
-                        if(dataValue.dataElement == "hNjuN29oWEo") { VILLAGE = dataValue.value }
-                        if(dataValue.dataElement == "QsbsNHyRwcu") { MPTOT = dataValue.value }
-                        if(dataValue.dataElement == "qiPi86HJH9D") { INCID = dataValue.value }
-                        if(dataValue.dataElement == "b4nlCulDaNv") { BAS = dataValue.value }
-                        if(dataValue.dataElement == "mIGq36ORtj5") { TOP = dataValue.value }
-                        if(dataValue.dataElement == "R3V4FZ7bm1Z") { BEH = dataValue.value }
-                        if(dataValue.dataElement == "pUcbnDZTKWO") { LATERALITY = dataValue.value }
-                        if(dataValue.dataElement == "g4InB94akRh") { MOR = dataValue.value }
-                        if(dataValue.dataElement == "MiCTO3OgRB8") { GRDE = dataValue.value }
-                        if(dataValue.dataElement == "lsyoWxLKpcg") { 
-                            dataValue.value == "Unkwown"? STAGE = "XX" : STAGE = dataValue.value 
-                        }
-                        if(dataValue.dataElement == "jufaPpTt33C") { T = dataValue.value }
-                        if(dataValue.dataElement == "crCh4AWyhEQ") { N = dataValue.value }
-                        if(dataValue.dataElement == "YU85aZgUvpI") { M = dataValue.value }
-                        
-                        TUMOURUPDATEDBY = teiEvent.storedBy?teiEvent.storedBy:"";
-                        if(dataValue.dataElement == "QDYFCDo0kLm") { INITIALT = dataValue.value }
-                        if(dataValue.dataElement == "EJi6tdw5T1v") { INTENTT = dataValue.value }
-                        if(dataValue.dataElement == "lb1iN94cSNn") { SGRY = dataValue.value }
-                        if(dataValue.dataElement == "NzUoPBTcUme") { DATES = dataValue.value }
-                        if(dataValue.dataElement == "tmy8Js2OerA") { CHEMO = dataValue.value }
-                        if(dataValue.dataElement == "dqLzVzpPBQk") { STARTC = dataValue.value }
-                        if(dataValue.dataElement == "qKApg9EbBvP") { ENDCHEMO = dataValue.value }
-                        if(dataValue.dataElement == "qhTmdhweTY6") { IMMUNO = dataValue.value }
-                        if(dataValue.dataElement == "UH0QjAVVpBw") { STARTI = dataValue.value }
-                        if(dataValue.dataElement == "Os8vbHJ3qoc") { ENDIMMUNO = dataValue.value }
-                        if(dataValue.dataElement == "simuoODFRUc") { RADIO = dataValue.value }
-                        if(dataValue.dataElement == "KuewOYQYRq7") { STARTR = dataValue.value }
-                        if(dataValue.dataElement == "THtdWv46cXH") { ENDRADIO = dataValue.value }
-                        if(dataValue.dataElement == "QKXwZ57aGdH") { HORMO = dataValue.value }
-                        if(dataValue.dataElement == "pazmxkluuAK") { STARTH = dataValue.value }
-                        if(dataValue.dataElement == "ZTtTjPPKemm") { ENDHORMO = dataValue.value }
-                        if(dataValue.dataElement == "N6J5Bp9auN9") { PALLIA = dataValue.value }
-                        if(dataValue.dataElement == "KWsp9YpTp8O") { DATEP = dataValue.value }
-                        if(dataValue.dataElement == "YYW855k5GgW") { OTHERT = dataValue.value }
-                        if(dataValue.dataElement == "tfeZgkgqJC9") { SPECIFYOT = dataValue.value }
-
-                    });
+                        tumourCounts ++
+                        tumourEvents.push(teiEvent)
                     } 
                 })
             })
+            
+            for (let i = 0; i < tumourEvents.length; i++) {
+                let teiEvent = tumourEvents[i]
 
-            var tumourTableRow = RECS+"\t"+CHEC+"\t"+HIVSTATUS+"\t"+DATEHIVTEST+"\t"+AGE+"\t"+ADDR+"\t"+SECTOR+"\t"+CELL+"\t"+VILLAGE+"\t"+MPCODE+"\t"+MPSEQ+"\t"+MPTOT+"\t"+INCID+"\t"+BAS+"\t"+TOP+"\t"+BEH+"\t"+
-                            LATERALITY+"\t"+MOR+"\t"+I10+"\t"+ICCC+"\t"+GRDE+"\t"+STAGE+"\t"+T+"\t"+N+"\t"+M+"\t"+UPDATE+"\t"+OBSOLETEFLAGTUMOURTABLE+"\t"+TUMOURID+"\t"+PATIENTIDTUMOURTABLE+"\t"+PATIENTRECORDIDTUMOURTABLE+"\t"+
-                            TUMOURUPDATEDBY+"\t"+TUMOURUNDUPLICATIONSTATUS+"\t"+INITIALT+"\t"+INTENTT+"\t"+SGRY+"\t"+DATES+"\t"+CHEMO+"\t"+STARTC+"\t"+ENDCHEMO+"\t"+IMMUNO+"\t"+STARTI+"\t"+ENDIMMUNO+"\t"+HPVASS+"\t"+RADIO+"\t"+
-                            STARTR+"\t"+ENDRADIO+"\t"+HORMO+"\t"+STARTH+"\t"+ENDHORMO+"\t"+PALLIA+"\t"+DATEP+"\t"+OTHERT+"\t"+SPECIFYOT+"\t"+STARTOT+"\t"+ENDOT;
-                    
-            tumourTableData = tumourTableData+ "\n" +tumourTableRow;
+                // Filling MPSEQ, MPTOT, TUMOURID, PATIENTIDTUMOURTABLE, and PATIENTRECORDIDTUMOURTABLE using patient unique ID
+                MPSEQ = (i+1)
+                MPTOT = tumourEvents.length
+                TUMOURID = uniqueId + '010'+ (i+1);
+                PATIENTIDTUMOURTABLE = uniqueId;
+                PATIENTRECORDIDTUMOURTABLE = uniqueId +'01';
+                
+                // Filling the rest of the tumor table fields
+                teiEvent.dataValues.map((dataValue) =>{
+                    if(dataValue.dataElement == "XBZsBO1iIMu") { HIVSTATUS = dataValue.value }
+                    if(dataValue.dataElement == "w3hjoxhRdxX") { DATEHIVTEST = dataValue.value }
+                    if(dataValue.dataElement == "Lklmhjoa2VZ") { AGE = dataValue.value }
+                    if(dataValue.dataElement == "YjyatbcXrAB") { ADDR = dataValue.value }
+                    if(dataValue.dataElement == "R7C6qavR1By") { SECTOR = dataValue.value }
+                    if(dataValue.dataElement == "JoiKTef007f") { CELL = dataValue.value }
+                    if(dataValue.dataElement == "hNjuN29oWEo") { VILLAGE = dataValue.value }
+                    if(dataValue.dataElement == "qiPi86HJH9D") { INCID = dataValue.value }
+                    if(dataValue.dataElement == "b4nlCulDaNv") { BAS = dataValue.value }
+                    if(dataValue.dataElement == "mIGq36ORtj5") { TOP = dataValue.value }
+                    if(dataValue.dataElement == "R3V4FZ7bm1Z") { BEH = dataValue.value }
+                    if(dataValue.dataElement == "pUcbnDZTKWO") { LATERALITY = dataValue.value }
+                    if(dataValue.dataElement == "g4InB94akRh") { MOR = dataValue.value }
+                    if(dataValue.dataElement == "MiCTO3OgRB8") { GRDE = dataValue.value }
+                    if(dataValue.dataElement == "lsyoWxLKpcg") {  dataValue.value == "Unkwown"? STAGE = "XX" : STAGE = dataValue.value  }
+                    if(dataValue.dataElement == "jufaPpTt33C") { T = dataValue.value }
+                    if(dataValue.dataElement == "crCh4AWyhEQ") { N = dataValue.value }
+                    if(dataValue.dataElement == "YU85aZgUvpI") { M = dataValue.value }
+                    TUMOURUPDATEDBY = teiEvent.storedBy?teiEvent.storedBy:"";
+                    if(dataValue.dataElement == "QDYFCDo0kLm") { INITIALT = dataValue.value }
+                    if(dataValue.dataElement == "EJi6tdw5T1v") { INTENTT = dataValue.value }
+                    if(dataValue.dataElement == "lb1iN94cSNn") { SGRY = dataValue.value }
+                    if(dataValue.dataElement == "NzUoPBTcUme") { DATES = dataValue.value }
+                    if(dataValue.dataElement == "tmy8Js2OerA") { CHEMO = dataValue.value }
+                    if(dataValue.dataElement == "dqLzVzpPBQk") { STARTC = dataValue.value }
+                    if(dataValue.dataElement == "qKApg9EbBvP") { ENDCHEMO = dataValue.value }
+                    if(dataValue.dataElement == "qhTmdhweTY6") { IMMUNO = dataValue.value }
+                    if(dataValue.dataElement == "UH0QjAVVpBw") { STARTI = dataValue.value }
+                    if(dataValue.dataElement == "Os8vbHJ3qoc") { ENDIMMUNO = dataValue.value }
+                    if(dataValue.dataElement == "simuoODFRUc") { RADIO = dataValue.value }
+                    if(dataValue.dataElement == "KuewOYQYRq7") { STARTR = dataValue.value }
+                    if(dataValue.dataElement == "THtdWv46cXH") { ENDRADIO = dataValue.value }
+                    if(dataValue.dataElement == "QKXwZ57aGdH") { HORMO = dataValue.value }
+                    if(dataValue.dataElement == "pazmxkluuAK") { STARTH = dataValue.value }
+                    if(dataValue.dataElement == "ZTtTjPPKemm") { ENDHORMO = dataValue.value }
+                    if(dataValue.dataElement == "N6J5Bp9auN9") { PALLIA = dataValue.value }
+                    if(dataValue.dataElement == "KWsp9YpTp8O") { DATEP = dataValue.value }
+                    if(dataValue.dataElement == "YYW855k5GgW") { OTHERT = dataValue.value }
+                    if(dataValue.dataElement == "tfeZgkgqJC9") { SPECIFYOT = dataValue.value }
+
+                });
+                var tumourTableRow = RECS+"\t"+CHEC+"\t"+HIVSTATUS+"\t"+DATEHIVTEST+"\t"+AGE+"\t"+ADDR+"\t"+SECTOR+"\t"+CELL+"\t"+VILLAGE+"\t"+MPCODE+"\t"+MPSEQ+"\t"+MPTOT+"\t"+INCID+"\t"+BAS+"\t"+TOP+"\t"+BEH+"\t"+
+                                LATERALITY+"\t"+MOR+"\t"+I10+"\t"+ICCC+"\t"+GRDE+"\t"+STAGE+"\t"+T+"\t"+N+"\t"+M+"\t"+UPDATE+"\t"+OBSOLETEFLAGTUMOURTABLE+"\t"+TUMOURID+"\t"+PATIENTIDTUMOURTABLE+"\t"+PATIENTRECORDIDTUMOURTABLE+"\t"+
+                                TUMOURUPDATEDBY+"\t"+TUMOURUNDUPLICATIONSTATUS+"\t"+INITIALT+"\t"+INTENTT+"\t"+SGRY+"\t"+DATES+"\t"+CHEMO+"\t"+STARTC+"\t"+ENDCHEMO+"\t"+IMMUNO+"\t"+STARTI+"\t"+ENDIMMUNO+"\t"+HPVASS+"\t"+RADIO+"\t"+
+                                STARTR+"\t"+ENDRADIO+"\t"+HORMO+"\t"+STARTH+"\t"+ENDHORMO+"\t"+PALLIA+"\t"+DATEP+"\t"+OTHERT+"\t"+SPECIFYOT+"\t"+STARTOT+"\t"+ENDOT;
+                        
+                tumourTableData = tumourTableData+ "\n" +tumourTableRow;
+            }
         });
 
         const aElement = document.createElement("a");
@@ -215,6 +222,7 @@ export const Tumour = () => {
                 <TableCellHead>TOP</TableCellHead>
                 <TableCellHead>BEH</TableCellHead>
                 <TableCellHead>PATIENTIDTUMOURTABLE</TableCellHead>
+                <TableCellHead>TUMOURIDSOURCETABLE</TableCellHead>
                 </TableRowHead>
             </TableHead>
             <TableBody>
@@ -231,6 +239,7 @@ export const Tumour = () => {
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="mIGq36ORtj5"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="pUcbnDZTKWO"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="U6uTS5AuKQi"?formatPatientID(dataValue.value):"")}</TableCell>
+                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="U6uTS5AuKQi"?formatPatientID(dataValue.value) + '01':"")}</TableCell>
                         </TableRow>
                         : 
                         <TableRow key={teiEvent.event}></TableRow>
