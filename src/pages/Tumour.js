@@ -13,7 +13,7 @@ import styles from './Form.module.css'
 const eventsQuery = {
     results: {
         resource: 'trackedEntityInstances.json',
-        params: ({ page, startDate, endDate, orgUnitID }) => ({
+        params: ({ page, startDate, endDate, orgUnitID, pageSize }) => ({
             page: page,
             ou: orgUnitID,
             program: 'rx6V962E4XM',
@@ -21,7 +21,7 @@ const eventsQuery = {
             programStartDate:startDate,
             programEndDate:endDate,
             totalPages: true,
-            pageSize:5,
+            pageSize: pageSize,
         }),
     },
     provinces: {
@@ -34,42 +34,7 @@ const eventsQuery = {
 }
 
 export const Tumour = () => {
-    // A dynamic alert to communicate success or failure 
-    const { show } = useAlert(
-        ({ message }) => message,
-        ({ status }) => {
-            if (status === 'success') return { success: true }
-            else if (status === 'error') return { critical: true }
-            else return {}
-        } )
-
-    // A dynamic useDataQuery hook to retrieve tumor events data
-    const { loading, error, data, refetch } = useDataQuery(eventsQuery, {
-        variables: { page: 0, startDate: '2018-01-01', endDate: '2021-07-17', orgUnitID: 'Hjw70Lodtf2' },
-    })
-
-    if (error) {  
-        const message = 'ERROR: ' + error.message
-        show({ message, status: 'error' })
-        return (
-            <> </>
-        )
-    }
-
-    if (loading) {
-        let provinces = []
-        return (
-            <>
-                <DataFilterHeaderView provinces={provinces}/>
-                <CircularLoader />
-            </>
-        )
-    }
-
-    if (data.results.trackedEntityInstances) {  
-        const message = 'SUCCESS: Successfully retrieved tumor events.'
-        show({ message, status: 'success' })
-    }
+    const [forFileDownload, setForFileDownload] = useState(false)
 
 
     let RECS = "1", CHEC = "1", HIVSTATUS = "", DATEHIVTEST = "", AGE = "",ADDR= "",SECTOR= "",	CELL= "", VILLAGE="", MPCODE="", MPSEQ= "",MPTOT= "",INCID= "",BAS= "",TOP= "",BEH= "",
@@ -90,10 +55,9 @@ export const Tumour = () => {
         return newID;
     }
 
-
-    const exportTSVFile = (trackedEntityInstances) =>{
+    const exportTSVFile = (trackedEntityInstances) =>{        
         let tumourTableData = tumourTableHeaders;
-
+        
         trackedEntityInstances.map((tei) => {
             let uniqueId = ''
             let tumourCounts = 0
@@ -116,7 +80,7 @@ export const Tumour = () => {
             
             for (let i = 0; i < tumourEvents.length; i++) {
                 let teiEvent = tumourEvents[i]
-
+                
                 // Filling MPSEQ, MPTOT, TUMOURID, PATIENTIDTUMOURTABLE, and PATIENTRECORDIDTUMOURTABLE using patient unique ID
                 MPSEQ = (i+1)
                 MPTOT = tumourEvents.length
@@ -165,13 +129,13 @@ export const Tumour = () => {
                     if(dataValue.dataElement == "KWsp9YpTp8O") { DATEP = dataValue.value }
                     if(dataValue.dataElement == "YYW855k5GgW") { OTHERT = dataValue.value }
                     if(dataValue.dataElement == "tfeZgkgqJC9") { SPECIFYOT = dataValue.value }
-
+                    
                 });
                 var tumourTableRow = RECS+"\t"+CHEC+"\t"+HIVSTATUS+"\t"+DATEHIVTEST+"\t"+AGE+"\t"+ADDR+"\t"+SECTOR+"\t"+CELL+"\t"+VILLAGE+"\t"+MPCODE+"\t"+MPSEQ+"\t"+MPTOT+"\t"+INCID+"\t"+BAS+"\t"+TOP+"\t"+BEH+"\t"+
-                                LATERALITY+"\t"+MOR+"\t"+I10+"\t"+ICCC+"\t"+GRDE+"\t"+STAGE+"\t"+T+"\t"+N+"\t"+M+"\t"+UPDATE+"\t"+OBSOLETEFLAGTUMOURTABLE+"\t"+TUMOURID+"\t"+PATIENTIDTUMOURTABLE+"\t"+PATIENTRECORDIDTUMOURTABLE+"\t"+
-                                TUMOURUPDATEDBY+"\t"+TUMOURUNDUPLICATIONSTATUS+"\t"+INITIALT+"\t"+INTENTT+"\t"+SGRY+"\t"+DATES+"\t"+CHEMO+"\t"+STARTC+"\t"+ENDCHEMO+"\t"+IMMUNO+"\t"+STARTI+"\t"+ENDIMMUNO+"\t"+HPVASS+"\t"+RADIO+"\t"+
+                LATERALITY+"\t"+MOR+"\t"+I10+"\t"+ICCC+"\t"+GRDE+"\t"+STAGE+"\t"+T+"\t"+N+"\t"+M+"\t"+UPDATE+"\t"+OBSOLETEFLAGTUMOURTABLE+"\t"+TUMOURID+"\t"+PATIENTIDTUMOURTABLE+"\t"+PATIENTRECORDIDTUMOURTABLE+"\t"+
+                TUMOURUPDATEDBY+"\t"+TUMOURUNDUPLICATIONSTATUS+"\t"+INITIALT+"\t"+INTENTT+"\t"+SGRY+"\t"+DATES+"\t"+CHEMO+"\t"+STARTC+"\t"+ENDCHEMO+"\t"+IMMUNO+"\t"+STARTI+"\t"+ENDIMMUNO+"\t"+HPVASS+"\t"+RADIO+"\t"+
                                 STARTR+"\t"+ENDRADIO+"\t"+HORMO+"\t"+STARTH+"\t"+ENDHORMO+"\t"+PALLIA+"\t"+DATEP+"\t"+OTHERT+"\t"+SPECIFYOT+"\t"+STARTOT+"\t"+ENDOT;
-                        
+                                
                 tumourTableData = tumourTableData+ "\n" +tumourTableRow;
             }
         });
@@ -182,6 +146,62 @@ export const Tumour = () => {
         aElement.download = "tumour_data.txt";
         document.body.appendChild(aElement); // Required for this to work in FireFox
         aElement.click();
+
+        // Reset file dowload to false
+        setForFileDownload(false)
+
+        // Show paginated list again
+        refetch({ 
+            pageSize: 5
+        })
+    }
+    
+    // A dynamic alert to communicate success or failure 
+    const { show } = useAlert(
+        ({ message }) => message,
+        ({ status }) => {
+            if (status === 'success') return { success: true }
+            else if (status === 'error') return { critical: true }
+            else return {}
+        } )
+
+    // A dynamic useDataQuery hook to retrieve tumor events data
+    const { loading, error, data, refetch } = useDataQuery(eventsQuery, {
+        variables: { page: 0, startDate: '2018-01-01', endDate: '2021-07-18', orgUnitID: 'Hjw70Lodtf2', pageSize: 5},
+    })
+
+    if (error) {  
+        const message = 'ERROR: ' + error.message
+        show({ message, status: 'error' })
+        return (
+            <> </>
+        )
+    }
+
+    if (loading) {
+        let provinces = []
+        return (
+            <>
+                {/* <DataFilterHeaderView provinces={provinces}/> */}
+                <CircularLoader />
+            </>
+        )
+    }
+
+    if (data.results.trackedEntityInstances) {  
+        const message = 'SUCCESS: Successfully retrieved tumor events.'
+        if (forFileDownload) {
+            exportTSVFile(data.results.trackedEntityInstances)
+        }
+        show({ message, status: 'success' })
+    }
+
+    const updateDowloadInfo = (pageSize) =>{
+        setForFileDownload(true)
+
+        refetch({ 
+            pageSize: pageSize
+        })
     }
 
     // Refetches and updates the tumour data as long as the Filter button is clicked
@@ -191,6 +211,7 @@ export const Tumour = () => {
             endDate: endDate,
             orgUnitID: orgUnitID 
         })
+        setForFileDownload(false)
     }
 
     return (
@@ -204,7 +225,7 @@ export const Tumour = () => {
                         <TableCellHead className={styles.leftcell}>
                             <div className={styles.row}>
                                 <div className={styles.downloadfiles}>
-                                    <Button primary onClick={() => {exportTSVFile(data.results.trackedEntityInstances)}}>{i18n.t('Download Tumour Data')} </Button>
+                                    <Button primary onClick={() => updateDowloadInfo( data.results.pager.total)}>{i18n.t('Download Tumour Data')} </Button>
                                 </div>
                             </div>
                         </TableCellHead>

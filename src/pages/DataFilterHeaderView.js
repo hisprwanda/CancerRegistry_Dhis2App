@@ -1,6 +1,6 @@
 import { Button, CircularLoader, InputField,Table, TableHead, TableCellHead, TableRowHead } from "@dhis2/ui";
 
-import { useDataQuery } from '@dhis2/app-runtime'
+import { useDataQuery, useAlert } from '@dhis2/app-runtime'
 import React, { useState, useEffect }  from "react";
 import styles from './Form.module.css'
 import i18n from "../locales/index.js";
@@ -38,8 +38,21 @@ export const DataFilterHeaderView = ({onUpdateFetchInfo, provinces}) => {
     lazy: true,
   })
   
+  // A dynamic alert to communicate success or failure 
+  const { show } = useAlert(
+    ({ message }) => message,
+    ({ status }) => {
+        if (status === 'success') return { success: true }
+        else if (status === 'error') return { critical: true }
+        else return {}
+    } )
+
   const updateFilterInfo = () => {
-    onUpdateFetchInfo(startDate, endDate, orgUnitID)
+    if (orgUnitID == '') {
+      show({ message:'You did not select any Health Facility', status: 'error' })    
+    } else {
+      onUpdateFetchInfo(startDate, endDate, orgUnitID)
+    }
   }
   
   const updateOrgUnitLevel = (data) => {      
