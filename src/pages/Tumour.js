@@ -167,7 +167,7 @@ export const Tumour = () => {
 
     // A dynamic useDataQuery hook to retrieve tumor events data
     const { loading, error, data, refetch } = useDataQuery(eventsQuery, {
-        variables: { page: 0, startDate: '2018-01-01', endDate: '2021-07-18', orgUnitID: 'Hjw70Lodtf2', pageSize: 5},
+        variables: { page: 0, startDate: '2018-01-01', endDate: '2021-07-18', orgUnitID: 'OujzhM1lgN5', pageSize: 5},
     })
 
     if (error) {  
