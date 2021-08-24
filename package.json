@@ -9,9 +9,8 @@
     "start": "d2-app-scripts start",
     "test": "d2-app-scripts test",
     "deploy": "d2-app-scripts deploy",
-    "lint": "d2-style js check && d2-style text check",
-    "format": "d2-style js apply && d2-style text apply"
-  },
+    "lint": "d2-style js check && d2-style text check"
+   },
   "devDependencies": {
     "@dhis2/cli-app-scripts": "^5.7.0",
     "@dhis2/cli-style": "^7.3.0"
