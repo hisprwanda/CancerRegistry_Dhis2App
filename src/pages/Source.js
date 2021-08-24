@@ -13,9 +13,10 @@ import styles from './Form.module.css'
 const eventsQuery = {
     results: {
         resource: 'trackedEntityInstances.json',
-        params: ({ page, startDate, endDate, orgUnitID, pageSize }) => ({
+        params: ({ page, startDate, endDate, orgUnitID, pageSize, ouMode }) => ({
             page: page,
             ou: orgUnitID,
+            ouMode: ouMode,
             program: 'rx6V962E4XM',
             fields: ['attributes[attribute,value],enrollments[events[storedBy,event,programStage,dataValues[dataElement,value]]]'],
             programStartDate:startDate,
@@ -67,6 +68,7 @@ export const Source = () => {
                 
                 if(dtvalues.dataElement=="WEMqZvXK07I")
                 {
+                    
                     //console.log(dtvalues.value);
                     tumor_src=dtvalues.value;
                 }
@@ -216,7 +218,7 @@ export const Source = () => {
         } )
 
     const { loading, error, data, refetch } = useDataQuery(eventsQuery, {
-        variables: { page: 0, startDate: '2021-02-01', endDate: '2021-06-01', orgUnitID: 'OujzhM1lgN5', pageSize: 5 },
+        variables: { page: 0, startDate: '2021-02-01', endDate: '2021-06-01', orgUnitID: 'OujzhM1lgN5', pageSize: 5, ouMode: 'SELECTED' },
     })
 
     if (error) { return <span>ERROR: {error.message}</span> }

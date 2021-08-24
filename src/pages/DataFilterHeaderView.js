@@ -1,4 +1,4 @@
-import { Button, CircularLoader, InputField,Table, TableHead, TableCellHead, TableRowHead } from "@dhis2/ui";
+import { Button, InputField,Table, TableHead, TableCellHead, TableRowHead, Switch } from "@dhis2/ui";
 
 import { useDataQuery, useAlert } from '@dhis2/app-runtime'
 import React, { useState, useEffect }  from "react";
@@ -10,6 +10,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 // Nyamata: R0kfMYExrnk
 // Butaro: OujzhM1lgN5
+// Rwanda: Hjw70Lodtf2
 
 const orgUnitsQuery = {
     results: {
@@ -32,6 +33,7 @@ export const DataFilterHeaderView = ({onUpdateFetchInfo, provinces}) => {
   const [orgUnitID, setOrgUnitID] = useState('')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  const [checkedOrg, setCheckedOrg] = useState(false)
   
   const { data, refetch } = useDataQuery(orgUnitsQuery, {
     variables: { orgUnitID: 'Hjw70Lodtf2' },
@@ -47,14 +49,24 @@ export const DataFilterHeaderView = ({onUpdateFetchInfo, provinces}) => {
         else return {}
     } )
 
+    const updateFilterInfoRw = () => {
+        onUpdateFetchInfo(startDate, endDate, "Hjw70Lodtf2", 'DESCENDANTS')
+    }
+
   const updateFilterInfo = () => {
     if (orgUnitID == '') {
       show({ message:'You did not select any Health Facility', status: 'error' })    
+    }else if (startDate == '' || endDate == '') {
+      show({ message:'Make sure you select Start Date and End Date', status: 'error' })    
     } else {
-      onUpdateFetchInfo(startDate, endDate, orgUnitID)
+      onUpdateFetchInfo(startDate, endDate, orgUnitID, 'SELECTED')
     }
   }
-  
+
+  const onChange = (ev) => {  
+    setCheckedOrg(!checkedOrg)
+  }
+
   const updateOrgUnitLevel = (data) => {      
       switch (orgUnitLevel) {
         case 'Level-District':
@@ -108,7 +120,35 @@ export const DataFilterHeaderView = ({onUpdateFetchInfo, provinces}) => {
             </TableHead>
         </Table>
 
+        <Switch
+            checked={checkedOrg}
+            label="Select Rwanda"
+            name="rwandaSelector"
+            onChange={onChange}
+            value="checked"
+        />
+
+          {checkedOrg?
           <Table >
+            <TableHead>
+                <TableRowHead>
+                    <TableCellHead>
+                      <div className={styles.row}>
+                          <select className={styles.cbx} name="provselected">
+                              <option key="Hjw70Lodtf2" value="Hjw70Lodtf2"> Rwanda </option>
+                          </select>
+                      </div>
+                      </TableCellHead>
+                      <TableCellHead>
+                        <div className={styles.row}>
+                        <Button primary onClick={updateFilterInfoRw}>Select Rwanda </Button>
+                        </div>
+                      </TableCellHead>
+                    </TableRowHead>
+                </TableHead>
+            </Table>
+            :
+            <Table >
             <TableHead>
                 <TableRowHead>
                     <TableCellHead>
@@ -181,7 +221,9 @@ export const DataFilterHeaderView = ({onUpdateFetchInfo, provinces}) => {
                       </TableCellHead>
                     </TableRowHead>
                 </TableHead>
-            </Table>   
+            </Table>
+            }
+          
     </div>
   )
 }

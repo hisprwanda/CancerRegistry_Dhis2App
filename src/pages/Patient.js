@@ -13,9 +13,10 @@ import styles from './Form.module.css'
 const eventsQuery = {
     results: {
         resource: 'trackedEntityInstances.json',
-        params: ({ page, startDate, endDate, orgUnitID, pageSize }) => ({
+        params: ({ page, startDate, endDate, orgUnitID, pageSize, ouMode }) => ({
             page: page,
             ou: orgUnitID,
+            ouMode: ouMode,
             program: 'rx6V962E4XM',
             fields: ['attributes[attribute,value],enrollments[events[storedBy,event,programStage,dataValues[dataElement,value]]]'],
             programStartDate:startDate,
@@ -232,7 +233,7 @@ export const Patient = () => {
         } )
 
     const { loading, error, data, refetch } = useDataQuery(eventsQuery, {
-        variables: { page: 0, startDate: '2021-02-01', endDate: '2021-06-01', orgUnitID: 'OujzhM1lgN5', pageSize: 5 },
+        variables: { page: 0, startDate: '2021-02-01', endDate: '2021-06-01', orgUnitID: 'OujzhM1lgN5', pageSize: 5, ouMode: 'SELECTED' },
     })
 
     if (error) { return <span>ERROR: {error.message}</span> }
@@ -262,11 +263,12 @@ export const Patient = () => {
     }
 
     // Refetches and updates the patient data as long as the Filter button is clicked
-    const updateFetchInfo = (startDate, endDate, orgUnitID) => {
+    const updateFetchInfo = (startDate, endDate, orgUnitID, ouMode) => {
         refetch({ 
             startDate: startDate,
             endDate: endDate,
-            orgUnitID: orgUnitID 
+            orgUnitID: orgUnitID,
+            ouMode: ouMode 
         })
 
         setForFileDownload(false)
