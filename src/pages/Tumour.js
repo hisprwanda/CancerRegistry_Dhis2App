@@ -56,6 +56,15 @@ export const Tumour = () => {
         return newID;
     }
 
+    const formatCanRegDate = (dhis2DateFormat) => {
+        let rawDate = dhis2DateFormat
+        let pyear= rawDate.substring(0,4);
+        let pmonth= rawDate.substring(5,7);
+        let pdate= rawDate.substring(8,10);
+        let canRegDateFormat = pyear+pmonth+pdate;
+        return canRegDateFormat;
+    }
+
     const exportTSVFile = (trackedEntityInstances) =>{        
         let tumourTableData = tumourTableHeaders;
         
@@ -92,13 +101,13 @@ export const Tumour = () => {
                 // Filling the rest of the tumor table fields
                 teiEvent.dataValues.map((dataValue) =>{
                     if(dataValue.dataElement == "XBZsBO1iIMu") { HIVSTATUS = dataValue.value }
-                    if(dataValue.dataElement == "w3hjoxhRdxX") { DATEHIVTEST = dataValue.value }
+                    if(dataValue.dataElement == "w3hjoxhRdxX") { DATEHIVTEST = formatCanRegDate(dataValue.value) }
                     if(dataValue.dataElement == "Lklmhjoa2VZ") { AGE = dataValue.value }
                     if(dataValue.dataElement == "YjyatbcXrAB") { ADDR = dataValue.value }
                     if(dataValue.dataElement == "R7C6qavR1By") { SECTOR = dataValue.value }
                     if(dataValue.dataElement == "JoiKTef007f") { CELL = dataValue.value }
                     if(dataValue.dataElement == "hNjuN29oWEo") { VILLAGE = dataValue.value }
-                    if(dataValue.dataElement == "qiPi86HJH9D") { INCID = dataValue.value }
+                    if(dataValue.dataElement == "qiPi86HJH9D") { INCID = formatCanRegDate(dataValue.value) }
                     if(dataValue.dataElement == "b4nlCulDaNv") { BAS = dataValue.value }
                     if(dataValue.dataElement == "mIGq36ORtj5") { TOP = dataValue.value }
                     if(dataValue.dataElement == "R3V4FZ7bm1Z") { BEH = dataValue.value }
@@ -113,21 +122,21 @@ export const Tumour = () => {
                     if(dataValue.dataElement == "QDYFCDo0kLm") { INITIALT = dataValue.value }
                     if(dataValue.dataElement == "EJi6tdw5T1v") { INTENTT = dataValue.value }
                     if(dataValue.dataElement == "lb1iN94cSNn") { SGRY = dataValue.value }
-                    if(dataValue.dataElement == "NzUoPBTcUme") { DATES = dataValue.value }
+                    if(dataValue.dataElement == "NzUoPBTcUme") { formatCanRegDate(DATES = dataValue.value) }
                     if(dataValue.dataElement == "tmy8Js2OerA") { CHEMO = dataValue.value }
-                    if(dataValue.dataElement == "dqLzVzpPBQk") { STARTC = dataValue.value }
-                    if(dataValue.dataElement == "qKApg9EbBvP") { ENDCHEMO = dataValue.value }
+                    if(dataValue.dataElement == "dqLzVzpPBQk") { STARTC = formatCanRegDate(dataValue.value) }
+                    if(dataValue.dataElement == "qKApg9EbBvP") { ENDCHEMO = formatCanRegDate(dataValue.value) }
                     if(dataValue.dataElement == "qhTmdhweTY6") { IMMUNO = dataValue.value }
-                    if(dataValue.dataElement == "UH0QjAVVpBw") { STARTI = dataValue.value }
-                    if(dataValue.dataElement == "Os8vbHJ3qoc") { ENDIMMUNO = dataValue.value }
+                    if(dataValue.dataElement == "UH0QjAVVpBw") { STARTI = formatCanRegDate(dataValue.value) }
+                    if(dataValue.dataElement == "Os8vbHJ3qoc") { ENDIMMUNO = formatCanRegDate(dataValue.value) }
                     if(dataValue.dataElement == "simuoODFRUc") { RADIO = dataValue.value }
-                    if(dataValue.dataElement == "KuewOYQYRq7") { STARTR = dataValue.value }
-                    if(dataValue.dataElement == "THtdWv46cXH") { ENDRADIO = dataValue.value }
+                    if(dataValue.dataElement == "KuewOYQYRq7") { STARTR = formatCanRegDate(dataValue.value) }
+                    if(dataValue.dataElement == "THtdWv46cXH") { ENDRADIO = formatCanRegDate(dataValue.value) }
                     if(dataValue.dataElement == "QKXwZ57aGdH") { HORMO = dataValue.value }
-                    if(dataValue.dataElement == "pazmxkluuAK") { STARTH = dataValue.value }
-                    if(dataValue.dataElement == "ZTtTjPPKemm") { ENDHORMO = dataValue.value }
+                    if(dataValue.dataElement == "pazmxkluuAK") { STARTH = formatCanRegDate(dataValue.value) }
+                    if(dataValue.dataElement == "ZTtTjPPKemm") { ENDHORMO = formatCanRegDate(dataValue.value) }
                     if(dataValue.dataElement == "N6J5Bp9auN9") { PALLIA = dataValue.value }
-                    if(dataValue.dataElement == "KWsp9YpTp8O") { DATEP = dataValue.value }
+                    if(dataValue.dataElement == "KWsp9YpTp8O") { DATEP = formatCanRegDate(dataValue.value) }
                     if(dataValue.dataElement == "YYW855k5GgW") { OTHERT = dataValue.value }
                     if(dataValue.dataElement == "tfeZgkgqJC9") { SPECIFYOT = dataValue.value }
                     
@@ -257,7 +266,7 @@ export const Tumour = () => {
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="Lklmhjoa2VZ"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="YjyatbcXrAB"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="QsbsNHyRwcu"?dataValue.value:"")}</TableCell>
-                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="qiPi86HJH9D"?dataValue.value:"")}</TableCell>
+                        <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="qiPi86HJH9D"? formatCanRegDate(dataValue.value):"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="b4nlCulDaNv"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="mIGq36ORtj5"?dataValue.value:"")}</TableCell>
                         <TableCell>{teiEvent.dataValues.map(dataValue => dataValue.dataElement=="pUcbnDZTKWO"?dataValue.value:"")}</TableCell>
