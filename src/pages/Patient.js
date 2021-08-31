@@ -305,7 +305,7 @@ export const Patient = () => {
 
                             <TableCellHead>UID</TableCellHead>
                             <TableCellHead>Other Phone</TableCellHead>
-                            <TableCellHead>Status</TableCellHead>
+                           
 
                 </TableRowHead>
             </TableHead>
@@ -367,7 +367,7 @@ export const Patient = () => {
                                         </p>
                                     ))}
                                 </TableCell>
-                                <TableCell>Incomplete</TableCell>
+                               
                             </TableRow>
 
                 ))

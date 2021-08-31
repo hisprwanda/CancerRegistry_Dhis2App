@@ -57,13 +57,166 @@ export const Source = () => {
         //variable declaration...
         let tumourid_src_table="", source_record_id="", tumor_src="", source_service="", patient_hospital_number="", archive_code="", date_of_admition="", date_of_discharge="", date_of_adm="", source_labo="", labnun="", Biopsy_Number="", Date_of_reception="", Date_of_Report="", Referred_from="", srcdate="", Referred_to="", Referred_for="", aregno="";
         // end of global variable declaration...
+        let temp_sourceid_src_table="";
+
+
+//mapping datas in file to download
+
+trackedEntityInstances.map((tei) => {
+    let uniqueId = ''
+    let sourceCounts = 0
+    let sourceEvents = []
+    tei.attributes.map((item) => {
+        if (item.attribute == 'PTGSZmTk3IQ') {
+            uniqueId = formatPatientID(item.value)
+        }
+    })
+    
+    // Getting the number of Tumour  stage events present in the current enrollment
+    tei.enrollments.map((enrollment) => {
+        enrollment.events.map((teiEvent) => {
+            if(teiEvent.programStage=="x0UOKjUKJsO"){
+                sourceCounts ++
+                sourceEvents.push(teiEvent)
+            } 
+        })
+    })
+    
+    for (let i = 0; i < sourceEvents.length; i++) {
+        let teiEvent = sourceEvents[i]
+
+       
+                    aregno = uniqueId+"0101"; 
+                    source_record_id=aregno+"0"+(i+1);
+                    tumourid_src_table=aregno;
+        
+        // Filling the rest of the tumor table fields
+        teiEvent.dataValues.map((dataValue) =>{
+            if(dataValue.dataElement == "WEMqZvXK07I") { tumor_src = dataValue.value }
+            if(dataValue.dataElement == "v9h8LhYlF2k") { source_service = dataValue.value }
+            if(dataValue.dataElement == "gfyCp3UGFBg") { patient_hospital_number = dataValue.value }
+            if(dataValue.dataElement == "g5PfzRwNHVy") { archive_code = dataValue.value }
+            if(dataValue.dataElement=="alUwzyO4ksp")
+            {
+                //console.log(dtvalues.value);
+                var dats=dataValue.value;
+
+                var pyear=dats.substring(0,4);
+                var pmonth=dats.substring(5,7);
+                var pdate=dats.substring(8,10);
+                date_of_admition=pyear+pmonth+pdate;
+
+            }
+            if(dataValue.dataElement=="Ntf8uwbttrj")
+            {
+                //console.log(dtvalues.value);
+                var dats=dataValue.value;
+
+                var pyear=dats.substring(0,4);
+                var pmonth=dats.substring(5,7);
+                var pdate=dats.substring(8,10);
+                date_of_discharge=pyear+pmonth+pdate;
+
+            }
+
+
+
+
+            if(dataValue.dataElement=="cVDk6Qi4aXJ")
+            {
+                //console.log(dtvalues.value);
+                source_labo=dataValue.value;
+            }
+            if(dataValue.dataElement=="m9zPgjtU6Ck")
+            {
+                //console.log(dtvalues.value);
+                labnun=dataValue.value;
+            }
+            if(dataValue.dataElement=="K90OuFCv3c8")
+            {
+                //console.log(dtvalues.value);
+                Biopsy_Number=dataValue.value;
+            }
+            if(dataValue.dataElement=="iUev3OfIqOg")
+            {
+                //console.log(dtvalues.value);
+                var dats=dataValue.value;
+
+                var pyear=dats.substring(0,4);
+                var pmonth=dats.substring(5,7);
+                var pdate=dats.substring(8,10);
+                Date_of_reception=pyear+pmonth+pdate;
+
+            }
+            if(dataValue.dataElement=="kNjR9xQM4Wv")
+            {
+                //console.log(dtvalues.value);
+                var dats=dataValue.value;
+
+                var pyear=dats.substring(0,4);
+                var pmonth=dats.substring(5,7);
+                var pdate=dats.substring(8,10);
+                Date_of_Report=pyear+pmonth+pdate;
+
+            }
+            
+            if(dataValue.dataElement=="sLGqIdIjg20")
+            {
+                //console.log(dtvalues.value);
+                Referred_from=dataValue.value;
+            }
+            if(dataValue.dataElement=="yvXtJYq4f5A")
+            {
+                //console.log(dtvalues.value);
+                Referred_to=dataValue.value;
+            }
+            if(dataValue.dataElement=="BD4nYiPXwLN")
+            {
+                //console.log(dtvalues.value);
+                Referred_for=dataValue.value;
+            }
+      
+    
+        });
+        if(!(tumor_src==""))
+                {
+                var fullstring=tumourid_src_table+"\t"+source_record_id+"\t"+tumor_src+"\t"+source_service+"\t"+patient_hospital_number+"\t"+archive_code+
+                "\t"+date_of_admition+"\t"+date_of_adm+"\t"+date_of_discharge+"\t"+source_labo+"\t"+labnun+"\t"+Biopsy_Number+
+                "\t"+Date_of_reception+"\t"+Date_of_Report+"\t"+Referred_from+"\t"+
+                srcdate+"\t"+Referred_to+"\t"+Referred_for;
+                        contacts=contacts+'\n'+fullstring;
+                }
+    }
+});
+
+
+
+/*
+
+
 
         trackedEntityInstances.map((itemp) => {
-            itemp.enrollments.map(function(enrolmnt, i){
-                enrolmnt.events.map(function(evts, i){
+
+            itemp.attributes.map(function(itm, i){
+                
+                if(itm.attribute=="PTGSZmTk3IQ") {
+                    let patientID = formatPatientID(itm.value)
+                    aregno = patientID+"0101"; 
+                    temp_sourceid_src_table=aregno+"0";
+                    tumourid_src_table=aregno;
+                
+                }
+            })
             
+            itemp.enrollments.map(function(enrolmnt, i){
+                let j = 1
+                enrolmnt.events.map(function(evts, i){
+           
                 if(evts.programStage=="x0UOKjUKJsO")
                 {
+                    source_record_id=temp_sourceid_src_table+j;
+                
+                    j++
                     evts.dataValues.map(function(dtvalues, i){
                 
                 if(dtvalues.dataElement=="WEMqZvXK07I")
@@ -164,27 +317,25 @@ export const Source = () => {
                     Referred_for=dtvalues.value;
                 }
                 })
-                }
-                    })
-                    })
-            
-            itemp.attributes.map(function(itm, i){
-                
-                if(itm.attribute=="PTGSZmTk3IQ") {
-                    let patientID = formatPatientID(itm.value)
-                    aregno = patientID+"0101"; 
-                    source_record_id=aregno+"01";
-                    tumourid_src_table=aregno;
                 
                 }
-            })
+                if(!(tumor_src==""))
+                {
+                var fullstring=tumourid_src_table+"\t"+source_record_id+"\t"+tumor_src+"\t"+source_service+"\t"+patient_hospital_number+"\t"+archive_code+
+                "\t"+date_of_admition+"\t"+date_of_adm+"\t"+date_of_discharge+"\t"+source_labo+"\t"+labnun+"\t"+Biopsy_Number+
+                "\t"+Date_of_reception+"\t"+Date_of_Report+"\t"+Referred_from+"\t"+
+                srcdate+"\t"+Referred_to+"\t"+Referred_for;
+                        contacts=contacts+'\n'+fullstring;
+                }
+                    })
+
+                  
+
+                    })
             
-            var fullstring=tumourid_src_table+"\t"+source_record_id+"\t"+tumor_src+"\t"+source_service+"\t"+patient_hospital_number+"\t"+archive_code+
-            "\t"+date_of_admition+"\t"+date_of_adm+"\t"+date_of_discharge+"\t"+source_labo+"\t"+labnun+"\t"+Biopsy_Number+
-            "\t"+Date_of_reception+"\t"+Date_of_Report+"\t"+Referred_from+"\t"+
-            srcdate+"\t"+Referred_to+"\t"+Referred_for;
-                    contacts=contacts+'\n'+fullstring;
-        });
+          
+            
+        });*/
 
         if(!(tumourid_src_table==""))
         {
