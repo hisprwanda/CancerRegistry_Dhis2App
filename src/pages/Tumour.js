@@ -72,12 +72,17 @@ export const Tumour = () => {
             let uniqueId = ''
             let tumourCounts = 0
             let tumourEvents = []
+            let attributesIDs = []
             tei.attributes.map((item) => {
                 if (item.attribute == 'PTGSZmTk3IQ') {
                     uniqueId = formatPatientID(item.value)
+                    attributesIDs.push(item.value)
+                }else if (item.attribute == 'uWRHiEUPnP7') {
+                    attributesIDs.push(item.value)
                 }
             })
-            
+            console.log('*** IDs for tei:' + tei.enrollments[0].trackedEntityInstance+ ' are: ', attributesIDs)
+  
             // Getting the number of Tumour  stage events present in the current enrollment
             tei.enrollments.map((enrollment) => {
                 enrollment.events.map((teiEvent) => {
