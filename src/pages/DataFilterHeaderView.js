@@ -107,11 +107,10 @@ export const DataFilterHeaderView = ({onUpdateFetchInfo, provinces}) => {
                       <div className={styles.row}>
                           <div className={styles.downloadfiles}>
                           <div className={styles.leftmargin}>
-                          Start Date
-                          <InputField label="From" type="date" value={startDate} onChange={({ value }) => setStartDate(value)} />
+                          <InputField label="Start Date" type="date" required value={startDate} onChange={({ value }) => setStartDate(value)} />
                           </div>
-                              <div className={styles.leftmarginsecond}> End Date
-                                <InputField label="To" type="date" value={endDate} onChange={({ value }) => setEndDate(value)} />
+                              <div className={styles.leftmarginsecond}>
+                                <InputField label="End Date" type="date" required value={endDate} onChange={({ value }) => setEndDate(value)} />
                           </div>
                           </div>
                         </div>
@@ -140,8 +139,8 @@ export const DataFilterHeaderView = ({onUpdateFetchInfo, provinces}) => {
                       </div>
                       </TableCellHead>
                       <TableCellHead>
-                        <div className={styles.row}>
-                        <Button primary onClick={updateFilterInfoRw}>Select Rwanda </Button>
+                        <div >
+                        <Button primary onClick={updateFilterInfoRw}>Fetch Data </Button>
                         </div>
                       </TableCellHead>
                     </TableRowHead>
@@ -216,7 +215,7 @@ export const DataFilterHeaderView = ({onUpdateFetchInfo, provinces}) => {
 
                       <TableCellHead>
                         <div className={styles.row}>
-                        <Button primary onClick={updateFilterInfo}>Filter </Button>
+                        <Button primary onClick={updateFilterInfo}>Fetch Data </Button>
                         </div>
                       </TableCellHead>
                     </TableRowHead>

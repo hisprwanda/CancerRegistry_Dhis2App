@@ -399,11 +399,12 @@ trackedEntityInstances.map((tei) => {
     }
 
     // Refetches and updates the tumour data as long as the Filter button is clicked
-    const updateFetchInfo = (startDate, endDate, orgUnitID) => {
+    const updateFetchInfo = (startDate, endDate, orgUnitID, ouMode) => {
         refetch({ 
             startDate: startDate,
             endDate: endDate,
-            orgUnitID: orgUnitID 
+            orgUnitID: orgUnitID,
+            ouMode: ouMode 
         })
 
         setForFileDownload(false)
