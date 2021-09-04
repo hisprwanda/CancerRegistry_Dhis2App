@@ -62,11 +62,13 @@ export const Patient = () => {
 
         //variable declaration...
 
-        let aregno="", afname="", lname="", emails="", age="", idnums="", genders="", bds="", mdates="", phn="", phn1="", nkin="", natn="", stus="", oncopr="", progress="", csdeath="", placd="";
-
+        let aregno=""
         // end of global variable declaration...
 
         trackedEntityInstances.map((itemp) => {
+            aregno = "";
+            let afname="", lname="", emails="", age="", idnums="", genders="", bds="", mdates="", phn="", phn1="", nkin="", natn="", stus="", oncopr="", progress="", csdeath="", placd="";
+
             itemp.enrollments.map((enrolmnt) => {
                 enrolmnt.events.map((evts) => {
 
@@ -140,8 +142,8 @@ export const Patient = () => {
                 
                 
                 
-                if(itm.attribute=="PTGSZmTk3IQ") {
-                aregno=formatPatientID(itm.value)
+                if(itm.attribute=="uWRHiEUPnP7") {
+                aregno=itm.value
                 }
             
                 if(itm.attribute=="m1At2P4UT9e")
@@ -190,16 +192,19 @@ export const Patient = () => {
             var tnnk="-1";
             
             var ifall="1";
- 
-            var ocd="";
-            var obsplaq="0";
-            var patrecid=aregno+"01";
-            var recby="Winny";
-            var patrecstatus="0";
-            var checkstatus="0";
-            var remark="";
-            var fullstring=aregno+"\t"+prss+"\t"+idnums+"\t"+afname+"\t"+lname+"\t"+genders+"\t"+bds+"\t"+phn+"\t"+phn1+"\t"+nkin+"\t"+tnnk+ "\t"+natn+"\t"+bds+"\t"+stus+"\t"+ 
-            oncopr+"\t"+ifall+"\t"+progress+"\t"+csdeath+"\t"+placd+"\t"+ocd+"\t"+obsplaq+"\t"+patrecid+ "\t"+recby+"\t"+bds+"\t"+patrecstatus+"\t"+checkstatus+"\t"+remark; contacts=contacts+'\n'+fullstring;
+            
+            if (!(aregno=="")) {
+                
+                var ocd="";
+                var obsplaq="0";
+                var patrecid=aregno+"01";
+                var recby="Winny";
+                var patrecstatus="0";
+                var checkstatus="0";
+                var remark="";
+                var fullstring=aregno+"\t"+prss+"\t"+idnums+"\t"+afname+"\t"+lname+"\t"+genders+"\t"+bds+"\t"+phn+"\t"+phn1+"\t"+nkin+"\t"+tnnk+ "\t"+natn+"\t"+bds+"\t"+stus+"\t"+ 
+                oncopr+"\t"+ifall+"\t"+progress+"\t"+csdeath+"\t"+placd+"\t"+ocd+"\t"+obsplaq+"\t"+patrecid+ "\t"+recby+"\t20210902\t"+patrecstatus+"\t"+checkstatus+"\t"+remark; contacts=contacts+'\n'+fullstring;
+            }
 
         });
 
@@ -352,7 +357,7 @@ export const Patient = () => {
                                 <TableCell>
                                     {item.attributes.map((attr, index) => (
                                         <p>
-                                            {attr.attribute == 'PTGSZmTk3IQ'
+                                            {attr.attribute == 'uWRHiEUPnP7'
                                                 ? attr.value
                                                 : ''}
                                         </p>

@@ -72,17 +72,12 @@ export const Tumour = () => {
             let uniqueId = ''
             let tumourCounts = 0
             let tumourEvents = []
-            let attributesIDs = []
             tei.attributes.map((item) => {
-                if (item.attribute == 'PTGSZmTk3IQ') {
-                    uniqueId = formatPatientID(item.value)
-                    attributesIDs.push(item.value)
-                }else if (item.attribute == 'uWRHiEUPnP7') {
-                    attributesIDs.push(item.value)
+                if (item.attribute == 'uWRHiEUPnP7') {
+                    uniqueId = item.value
                 }
             })
-            console.log('*** IDs for tei:' + tei.enrollments[0].trackedEntityInstance+ ' are: ', attributesIDs)
-  
+            
             // Getting the number of Tumour  stage events present in the current enrollment
             tei.enrollments.map((enrollment) => {
                 enrollment.events.map((teiEvent) => {
@@ -150,8 +145,10 @@ export const Tumour = () => {
                 LATERALITY+"\t"+MOR+"\t"+I10+"\t"+ICCC+"\t"+GRDE+"\t"+STAGE+"\t"+T+"\t"+N+"\t"+M+"\t"+UPDATE+"\t"+OBSOLETEFLAGTUMOURTABLE+"\t"+TUMOURID+"\t"+PATIENTIDTUMOURTABLE+"\t"+PATIENTRECORDIDTUMOURTABLE+"\t"+
                 TUMOURUPDATEDBY+"\t"+TUMOURUNDUPLICATIONSTATUS+"\t"+INITIALT+"\t"+INTENTT+"\t"+SGRY+"\t"+DATES+"\t"+CHEMO+"\t"+STARTC+"\t"+ENDCHEMO+"\t"+IMMUNO+"\t"+STARTI+"\t"+ENDIMMUNO+"\t"+HPVASS+"\t"+RADIO+"\t"+
                                 STARTR+"\t"+ENDRADIO+"\t"+HORMO+"\t"+STARTH+"\t"+ENDHORMO+"\t"+PALLIA+"\t"+DATEP+"\t"+OTHERT+"\t"+SPECIFYOT+"\t"+STARTOT+"\t"+ENDOT;
-                                
-                tumourTableData = tumourTableData+ "\n" +tumourTableRow;
+                
+                if ( (PATIENTIDTUMOURTABLE.length == 8) ) {
+                    tumourTableData = tumourTableData+ "\n" +tumourTableRow;
+                } 
             }
         });
 
