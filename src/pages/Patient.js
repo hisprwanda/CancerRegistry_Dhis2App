@@ -9,6 +9,8 @@ import * as classes from '../App.module.css'
 import i18n from "../locales/index.js";
 import styles from './Form.module.css'
 
+import { formatTodayDate } from "../app_utils/App_Utils";
+
 
 const eventsQuery = {
     results: {
@@ -203,20 +205,18 @@ export const Patient = () => {
                 var checkstatus="0";
                 var remark="";
                 var fullstring=aregno+"\t"+prss+"\t"+idnums+"\t"+afname+"\t"+lname+"\t"+genders+"\t"+bds+"\t"+phn+"\t"+phn1+"\t"+nkin+"\t"+tnnk+ "\t"+natn+"\t"+bds+"\t"+stus+"\t"+ 
-                oncopr+"\t"+ifall+"\t"+progress+"\t"+csdeath+"\t"+placd+"\t"+ocd+"\t"+obsplaq+"\t"+patrecid+ "\t"+recby+"\t20210902\t"+patrecstatus+"\t"+checkstatus+"\t"+remark; contacts=contacts+'\n'+fullstring;
+                oncopr+"\t"+ifall+"\t"+progress+"\t"+csdeath+"\t"+placd+"\t"+ocd+"\t"+obsplaq+"\t"+patrecid+ "\t"+recby+"\t"+formatTodayDate()+"\t"+patrecstatus+"\t"+checkstatus+"\t"+remark; contacts=contacts+'\n'+fullstring;
             }
 
         });
 
-        if(!(aregno=="")) {
-            const element = document.createElement("a");
-            const file = new Blob([contacts], {type: 'text/plain;charset=utf-8'});
-            element.href = URL.createObjectURL(file);
-            element.download = "patient_data.txt";
-            document.body.appendChild(element); // Required for this to work in FireFox
-            element.click();
-
-        }
+        
+        const element = document.createElement("a");
+        const file = new Blob([contacts], {type: 'text/plain;charset=utf-8'});
+        element.href = URL.createObjectURL(file);
+        element.download = "patient_data.txt";
+        document.body.appendChild(element); // Required for this to work in FireFox
+        element.click();
 
         // Reset file dowload to false
         setForFileDownload(false)
