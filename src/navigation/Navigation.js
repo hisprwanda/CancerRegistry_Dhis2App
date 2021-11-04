@@ -55,10 +55,11 @@ export const Navigation = () => (
 
         <NavigationItem
             // Menu item for the FAQ page
-            label={i18n.t("Data Filter")}
-            path="/dataFilter"
+            label={i18n.t("All Records Export")}
+            path="/allRecords"
         />
 
-        <NavigationItem label={i18n.t("Reports")} path="/reports" />
+        <NavigationItem label={i18n.t("Reports")}
+         path="/reports" />
     </Menu>
 )

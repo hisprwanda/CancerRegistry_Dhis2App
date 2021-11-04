@@ -3,7 +3,7 @@ import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import styles from './App.module.css'
 import { Navigation } from './navigation'
-import { Home, Tumour, DataFilter, Reports, NoMatch, Patient,Source } from './pages'
+import { Home, Tumour, AllRecords, Reports, NoMatch, Patient,Source } from './pages'
 
 
 const MyApp = () => (
@@ -66,8 +66,8 @@ const MyApp = () => (
                         // FAQ route, will render "Form" component
                         // when "/faq" is the current url
                         exact
-                        path="/dataFilter"
-                        component={DataFilter}
+                        path="/allRecords"
+                        component={AllRecords}
                     />
 
                     <Route

@@ -22,7 +22,7 @@ const orgUnitsQuery = {
     },
 }
 
-export const DataFilterHeaderView = ({onUpdateFetchInfo, provinces}) => {
+export const AllRecordsHeaderView = ({onUpdateFetchInfo, provinces}) => {
   
   // Component's states
   const [orgUnitLevel, setOrgUnitLevel] = useState('')

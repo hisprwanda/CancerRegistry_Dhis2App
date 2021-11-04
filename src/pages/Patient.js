@@ -1,7 +1,7 @@
 import { useDataQuery , useAlert} from '@dhis2/app-runtime'
 import { Button, CircularLoader, InputField, Table, TableBody, TableCell, TableCellHead, TableHead, TableRow, TableRowHead } from "@dhis2/ui";
 
-import { DataFilterHeaderView } from './DataFilterHeaderView'
+import { AllRecordsHeaderView } from './AllRecordsHeaderView'
 import React, { useState } from 'react'
 
 import { PaginationControls } from './TumourComponents/PaginationControls'
@@ -69,11 +69,40 @@ export const Patient = () => {
 
         trackedEntityInstances.map((itemp) => {
             aregno = "";
-            let afname="", lname="", emails="", age="", idnums="", genders="", bds="", mdates="", phn="", phn1="", nkin="", natn="", stus="", oncopr="", progress="", csdeath="", placd="";
+            let afname="", lname="", emails="", age="", idnums="", genders="", bds="", mdates="",incdates="", phn="", phn1="", nkin="", natn="", stus="", oncopr="", progress="", csdeath="", placd="", datelastcontact="",remark="",inciddates="",datelst="";
 
             itemp.enrollments.map((enrolmnt) => {
                 enrolmnt.events.map((evts) => {
+                    stus="";datelastcontact="";oncopr="";progress="";csdeath="";placd="";remark="";inciddates="",datelst="";
+//tumor script to store the date of last contact
 
+
+                    if(evts.programStage=="Y0cWLBEdXzb")
+                    {
+                        evts.dataValues.map(function(dttumors, i){
+                    
+                   
+
+                    if(dttumors.dataElement=="qiPi86HJH9D")
+                    {
+                        //console.log(dtvalues.value);
+                        incdates=dttumors.value;
+               // var incyear=incdates.substring(0,4);
+               // var incmonth=incdates.substring(5,7);
+                //var incdate=incdates.substring(8,10);
+               // inciddates=incyear+incmonth+incdate;
+                    }
+                  
+                    
+                    })
+                    }
+
+
+
+
+// follow up script
+
+                    
                     if(evts.programStage=="yj7nAGqKXZw")
                     {
                         evts.dataValues.map(function(dtvalues, i){
@@ -82,6 +111,17 @@ export const Patient = () => {
                     {
                         //console.log(dtvalues.value);
                         stus=dtvalues.value;
+                    }
+
+                    if(dtvalues.dataElement=="ZBgYdd6OKlc")
+                    {
+                        //console.log(dtvalues.value);
+                        mdates=dtvalues.value;
+                        datelst=mdates;
+                var pyear=mdates.substring(0,4);
+                var pmonth=mdates.substring(5,7);
+                var pdate=mdates.substring(8,10);
+                datelastcontact=pyear+pmonth+pdate;
                     }
                     
                     if(dtvalues.dataElement=="TFmh28f4Ylz")
@@ -103,6 +143,11 @@ export const Patient = () => {
                     {
                         //console.log(dtvalues.value);
                         placd=dtvalues.value;
+                    }
+                    if(dtvalues.dataElement=="OjKZjjByH9n")
+                    {
+                        //console.log(dtvalues.value);
+                        remark=dtvalues.value;
                     }
                     
                     
@@ -203,8 +248,16 @@ export const Patient = () => {
                 var recby="Winny";
                 var patrecstatus="0";
                 var checkstatus="0";
-                var remark="";
-                var fullstring=aregno+"\t"+prss+"\t"+idnums+"\t"+afname+"\t"+lname+"\t"+genders+"\t"+bds+"\t"+phn+"\t"+phn1+"\t"+nkin+"\t"+tnnk+ "\t"+natn+"\t"+bds+"\t"+stus+"\t"+ 
+
+                var datelast=new Date(datelst);
+                var dateinc=new Date(incdates);
+
+                if(datelast.getTime() <= dateinc.getTime()){
+                    //date 1 is newer
+                    datelastcontact="";
+                }
+              
+                var fullstring=aregno+"\t"+prss+"\t"+idnums+"\t"+afname+"\t"+lname+"\t"+genders+"\t"+bds+"\t"+phn+"\t"+phn1+"\t"+nkin+"\t"+tnnk+ "\t"+natn+"\t"+datelastcontact+"\t"+stus+"\t"+ 
                 oncopr+"\t"+ifall+"\t"+progress+"\t"+csdeath+"\t"+placd+"\t"+ocd+"\t"+obsplaq+"\t"+patrecid+ "\t"+recby+"\t"+formatTodayDate()+"\t"+patrecstatus+"\t"+checkstatus+"\t"+remark; contacts=contacts+'\n'+fullstring;
             }
 
@@ -283,7 +336,7 @@ export const Patient = () => {
 
         <div className={classes.tableContainer}>
           <div className='products'>
-            <DataFilterHeaderView onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
+            <AllRecordsHeaderView onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
             
             <Table>
                                 <TableHead>

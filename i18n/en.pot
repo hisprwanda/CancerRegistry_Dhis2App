@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2021-07-14T09:11:08.801Z\n"
-"PO-Revision-Date: 2021-07-14T09:11:08.801Z\n"
+"POT-Creation-Date: 2021-09-21T12:39:55.149Z\n"
+"PO-Revision-Date: 2021-09-21T12:39:55.149Z\n"
 
 msgid "Home"
 msgstr ""
@@ -20,10 +20,13 @@ msgstr ""
 msgid "Source"
 msgstr ""
 
-msgid "Data Filter"
+msgid "All Records Export"
 msgstr ""
 
 msgid "Reports"
+msgstr ""
+
+msgid "Download Oncology Data"
 msgstr ""
 
 msgid "Data for Export"

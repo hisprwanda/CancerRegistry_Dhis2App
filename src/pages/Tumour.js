@@ -1,7 +1,7 @@
 import { useDataQuery, useAlert } from '@dhis2/app-runtime'
 import { Button, CircularLoader, InputField, Table, TableBody, TableCell, TableCellHead, TableHead, TableRow, TableRowHead } from "@dhis2/ui";
 
-import { DataFilterHeaderView } from './DataFilterHeaderView'
+import { AllRecordsHeaderView } from './AllRecordsHeaderView'
 import React, { useState } from 'react'
 
 import { PaginationControls } from './TumourComponents/PaginationControls'
@@ -98,7 +98,10 @@ export const Tumour = () => {
                 TUMOURID = uniqueId + '010'+ (i+1);
                 PATIENTIDTUMOURTABLE = uniqueId;
                 PATIENTRECORDIDTUMOURTABLE = uniqueId +'01';
-                
+                TOP ="";
+     HIVSTATUS = "", DATEHIVTEST = "", AGE = "",ADDR= "",SECTOR= "",	CELL= "", VILLAGE="", MPCODE="", MPSEQ= "",MPTOT= "",INCID= "",BAS= "",TOP= "",BEH= "",
+    LATERALITY="",MOR="",I10="",ICCC="",GRDE="",STAGE="",T="",N="",M="",TUMOURUPDATEDBY="",TUMOURUNDUPLICATIONSTATUS="",INITIALT="",INTENTT="",SGRY="",DATES="",CHEMO="",STARTC="",ENDCHEMO="",IMMUNO="",STARTI="",ENDIMMUNO="",HPVASS="",RADIO="",STARTR="",ENDRADIO="",HORMO="",STARTH="",ENDHORMO="",PALLIA="",DATEP="",OTHERT="",SPECIFYOT="",STARTOT="",ENDOT="";
+
                 // Filling the rest of the tumor table fields
                 teiEvent.dataValues.map((dataValue) =>{
                     if(dataValue.dataElement == "XBZsBO1iIMu") { HIVSTATUS = dataValue.value }
@@ -195,7 +198,7 @@ export const Tumour = () => {
         let provinces = []
         return (
             <>
-                {/* <DataFilterHeaderView provinces={provinces}/> */}
+                {/* <AllRecordsHeaderView provinces={provinces}/> */}
                 <CircularLoader />
             </>
         )
@@ -232,7 +235,7 @@ export const Tumour = () => {
 
         <div className={classes.tableContainer}>
           <div className='products'>
-            <DataFilterHeaderView onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
+            <AllRecordsHeaderView onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
             <Table>
                 <TableHead>
                     <TableRowHead>

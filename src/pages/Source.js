@@ -1,7 +1,7 @@
 import { useDataQuery, useAlert } from '@dhis2/app-runtime'
 import { Button, CircularLoader, InputField, Table, TableBody, TableCell, TableCellHead, TableHead, TableRow, TableRowHead } from "@dhis2/ui";
 
-import { DataFilterHeaderView } from './DataFilterHeaderView'
+import { AllRecordsHeaderView } from './AllRecordsHeaderView'
 import React, { useState } from 'react'
 
 import { PaginationControls } from './SourceComponents/PaginationControls'
@@ -89,10 +89,16 @@ trackedEntityInstances.map((tei) => {
                     aregno = uniqueId+"0101"; 
                     source_record_id=aregno+"0"+(i+1);
                     tumourid_src_table=aregno;
+
+                    tumor_src ="";source_service ="";patient_hospital_number ="";archive_code ="";date_of_admition="";
+                    date_of_discharge="";source_labo="";labnun=""; Biopsy_Number="";Date_of_reception="";
+                     Date_of_Report="";Referred_from="";Referred_to="";Referred_for="";
         
         // Filling the rest of the tumor table fields
         teiEvent.dataValues.map((dataValue) =>{
-            if(dataValue.dataElement == "WEMqZvXK07I") { tumor_src = dataValue.value }
+          
+            if(dataValue.dataElement == "WEMqZvXK07I") { 
+                tumor_src = dataValue.value }
             if(dataValue.dataElement == "v9h8LhYlF2k") { source_service = dataValue.value }
             if(dataValue.dataElement == "gfyCp3UGFBg") { patient_hospital_number = dataValue.value }
             if(dataValue.dataElement == "g5PfzRwNHVy") { archive_code = dataValue.value }
@@ -265,7 +271,7 @@ trackedEntityInstances.map((tei) => {
 
         <div className={classes.tableContainer}>
           <div className='products'>
-            <DataFilterHeaderView onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
+            <AllRecordsHeaderView onUpdateFetchInfo={updateFetchInfo} provinces={data.provinces.children}/>
             
             
             <Table>
