@@ -69,11 +69,11 @@ export const Patient = () => {
 
         trackedEntityInstances.map((itemp) => {
             aregno = "";
-            let afname="", lname="", emails="", age="", idnums="", genders="", bds="", mdates="",incdates="", phn="", phn1="", nkin="", natn="", stus="", oncopr="", progress="", csdeath="", placd="", datelastcontact="",remark="",inciddates="",datelst="";
+            let afname="", lname="", emails="", age="", idnums="", genders="", bds="", mdates="",incdates="", phn="", phn1="", nkin="", natn="", stus="", oncopr="", progress="", csdeath="", placd="", datelastcontact="",remark="",inciddates="",datelst="",datelastcontact_temp="";
 
             itemp.enrollments.map((enrolmnt) => {
                 enrolmnt.events.map((evts) => {
-                    stus="";datelastcontact="";oncopr="";progress="";csdeath="";placd="";remark="";inciddates="",datelst="";
+                    //stus="";datelastcontact="";oncopr="";progress="";csdeath="";placd="";remark="";inciddates="";
 //tumor script to store the date of last contact
 
 
@@ -105,7 +105,29 @@ export const Patient = () => {
                     
                     if(evts.programStage=="yj7nAGqKXZw")
                     {
+
+
                         evts.dataValues.map(function(dtvalues, i){
+
+                            if(dtvalues.dataElement=="ZBgYdd6OKlc")
+                            {
+                                //console.log(dtvalues.value);
+                        mdates=dtvalues.value;
+                        datelastcontact_temp=mdates;
+                        
+                       // var pyear=mdates.substring(0,4);
+                       // var pmonth=mdates.substring(5,7);
+                       // var pdate=mdates.substring(8,10);
+                       // datelastcontact=pyear+pmonth+pdate;
+                        
+                            }
+
+                            var datelastcontact_temp_conv=new Date(datelastcontact_temp);
+                            var datelst_conv=new Date(datelst);
+                          
+                            datelst=datelastcontact_temp;
+                            stus="";oncopr="";progress="";csdeath="";placd="";remark="";
+
                     
                     if(dtvalues.dataElement=="ya7NvvPZ6NE")
                     {
@@ -113,17 +135,6 @@ export const Patient = () => {
                         stus=dtvalues.value;
                     }
 
-                    if(dtvalues.dataElement=="ZBgYdd6OKlc")
-                    {
-                        //console.log(dtvalues.value);
-                        mdates=dtvalues.value;
-                        datelst=mdates;
-                var pyear=mdates.substring(0,4);
-                var pmonth=mdates.substring(5,7);
-                var pdate=mdates.substring(8,10);
-                datelastcontact=pyear+pmonth+pdate;
-                    }
-                    
                     if(dtvalues.dataElement=="TFmh28f4Ylz")
                     {
                         //console.log(dtvalues.value);
@@ -157,6 +168,9 @@ export const Patient = () => {
                     
                     
                     })
+
+
+
                     }
 
                 })
@@ -252,10 +266,33 @@ export const Patient = () => {
                 var datelast=new Date(datelst);
                 var dateinc=new Date(incdates);
 
-                if(datelast.getTime() <= dateinc.getTime()){
+                var datediff=Math.floor((Math.abs(datelast-dateinc))/(1000*60*60*24));
+          if(datediff<0){
                     //date 1 is newer
                     datelastcontact="";
+                  
                 }
+                else{
+
+                   var pyear=datelst.substring(0,4);
+                        var pmonth=datelst.substring(5,7);
+                        var pdate=datelst.substring(8,10);
+                        datelastcontact=pyear+pmonth+pdate;   
+                }
+
+
+               /* if(datelast.getTime() <= dateinc.getTime()){
+                    //date 1 is newer
+                    datelastcontact="";
+                  
+                }
+                else{
+
+                   var pyear=datelst.substring(0,4);
+                        var pmonth=datelst.substring(5,7);
+                        var pdate=datelst.substring(8,10);
+                        datelastcontact=pyear+pmonth+pdate;   
+                }*/
               
                 var fullstring=aregno+"\t"+prss+"\t"+idnums+"\t"+afname+"\t"+lname+"\t"+genders+"\t"+bds+"\t"+phn+"\t"+phn1+"\t"+nkin+"\t"+tnnk+ "\t"+natn+"\t"+datelastcontact+"\t"+stus+"\t"+ 
                 oncopr+"\t"+ifall+"\t"+progress+"\t"+csdeath+"\t"+placd+"\t"+ocd+"\t"+obsplaq+"\t"+patrecid+ "\t"+recby+"\t"+formatTodayDate()+"\t"+patrecstatus+"\t"+checkstatus+"\t"+remark; contacts=contacts+'\n'+fullstring;
