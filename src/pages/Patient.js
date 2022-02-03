@@ -65,11 +65,13 @@ export const Patient = () => {
         //variable declaration...
 
         let aregno=""
+        let aregnoOld = ""
         // end of global variable declaration...
 
         trackedEntityInstances.map((itemp) => {
             aregno = "";
-            let afname="", lname="", emails="", age="", idnums="", genders="", bds="", mdates="",incdates="", phn="", phn1="", nkin="", natn="", stus="", oncopr="", progress="", csdeath="", placd="", datelastcontact="",remark="",inciddates="",datelst="",datelastcontact_temp="";
+            aregnoOld = "";
+            let afname="", lname="", emails="", age="", idnums="", genders="", bds="", mdates="",incdates="", phn="", phn1="", nkin="", natn="", stus="", oncopr="", progress="", csdeath="", placd="", datelastcontact="",remark="",inciddates="",datelst="",datelastcontact_temp="",recby="";
 
             itemp.enrollments.map((enrolmnt) => {
                 enrolmnt.events.map((evts) => {
@@ -126,7 +128,7 @@ export const Patient = () => {
                             var datelst_conv=new Date(datelst);
                           
                             datelst=datelastcontact_temp;
-                            stus="";oncopr="";progress="";csdeath="";placd="";remark="";
+                         
 
                     
                     if(dtvalues.dataElement=="ya7NvvPZ6NE")
@@ -161,7 +163,8 @@ export const Patient = () => {
                         remark=dtvalues.value;
                     }
                     
-                    
+                    // recorded by
+                    recby = evts.storedBy?evts.storedBy:"";
                     
                     
                     
@@ -206,6 +209,11 @@ export const Patient = () => {
                 if(itm.attribute=="uWRHiEUPnP7") {
                 aregno=itm.value
                 }
+                if(itm.attribute=="PTGSZmTk3IQ") {
+                    aregnoOld=itm.value
+                    }
+                
+               
             
                 if(itm.attribute=="m1At2P4UT9e")
                 {
@@ -253,13 +261,19 @@ export const Patient = () => {
             var tnnk="-1";
             
             var ifall="1";
+
+            if(aregno=="")
+            {
+                aregno=aregnoOld;
+            }
             
-            if (!(aregno=="")) {
+            
+            if ((!(aregno=="")) && (aregno.length == 8)) {
                 
                 var ocd="";
                 var obsplaq="0";
                 var patrecid=aregno+"01";
-                var recby="Winny";
+                recby=recby;
                 var patrecstatus="0";
                 var checkstatus="0";
 

@@ -184,6 +184,8 @@ trackedEntityInstances.map((tei) => {
       
     
         });
+
+        
         var fullstring=tumourid_src_table+"\t"+source_record_id+"\t"+tumor_src+"\t"+source_service+"\t"+patient_hospital_number+"\t"+archive_code+
         "\t"+date_of_admition+"\t"+date_of_adm+"\t"+date_of_discharge+"\t"+source_labo+"\t"+labnun+"\t"+Biopsy_Number+
         "\t"+Date_of_reception+"\t"+Date_of_Report+"\t"+Referred_from+"\t"+srcdate+"\t"+Referred_to+"\t"+Referred_for;
