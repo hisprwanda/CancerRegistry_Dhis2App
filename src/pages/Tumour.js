@@ -71,12 +71,16 @@ export const Tumour = () => {
         
         trackedEntityInstances.map((tei) => {
             let uniqueId = ''
+            let aregnoOld = ''
             let tumourCounts = 0
             let tumourEvents = []
             tei.attributes.map((item) => {
                 if (item.attribute == 'uWRHiEUPnP7') {
                     uniqueId = item.value
                 }
+                if(item.attribute=="PTGSZmTk3IQ") {
+                    aregnoOld=item.value
+                    }
             })
             
             // Getting the number of Tumour  stage events present in the current enrollment
@@ -94,6 +98,12 @@ export const Tumour = () => {
                 
                 // Filling MPSEQ, MPTOT, TUMOURID, PATIENTIDTUMOURTABLE, and PATIENTRECORDIDTUMOURTABLE using patient unique ID
                 MPSEQ = (i+1)
+
+if(uniqueId=='')
+{
+    uniqueId=aregnoOld;   
+}
+
                 MPTOT = tumourEvents.length
                 TUMOURID = uniqueId + '010'+ (i+1);
                 PATIENTIDTUMOURTABLE = uniqueId;

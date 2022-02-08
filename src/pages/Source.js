@@ -64,12 +64,16 @@ export const Source = () => {
 
 trackedEntityInstances.map((tei) => {
     let uniqueId = ''
+    let aregnoOld = ''
     let sourceCounts = 0
     let sourceEvents = []
     tei.attributes.map((item) => {
         if (item.attribute == 'uWRHiEUPnP7') {
             uniqueId = item.value
         }
+        if(item.attribute=="PTGSZmTk3IQ") {
+            aregnoOld=item.value
+            }
     })
     
     // Getting the number of Tumour  stage events present in the current enrollment
@@ -84,7 +88,10 @@ trackedEntityInstances.map((tei) => {
     
     for (let i = 0; i < sourceEvents.length; i++) {
         let teiEvent = sourceEvents[i]
-
+        if(uniqueId=='')
+        {
+            uniqueId=aregnoOld;   
+        }
        
                     aregno = uniqueId+"0101"; 
                     source_record_id=aregno+"0"+(i+1);
