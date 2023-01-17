@@ -72,8 +72,9 @@ export const Patient = () => {
             aregno = "";
             aregnoOld = "";
             let afname="", lname="", emails="", age="", idnums="", genders="", bds="", mdates="",incdates="", phn="", phn1="", nkin="", natn="", stus="", oncopr="", progress="", csdeath="", placd="", datelastcontact="",remark="",inciddates="",datelst="",datelastcontact_temp="",recby="";
-
+           
             itemp.enrollments.map((enrolmnt) => {
+                
                 enrolmnt.events.map((evts) => {
                     //stus="";datelastcontact="";oncopr="";progress="";csdeath="";placd="";remark="";inciddates="";
 //tumor script to store the date of last contact
@@ -103,11 +104,11 @@ export const Patient = () => {
 
 
 // follow up script
-
+                    mdates="";  
                     
                     if(evts.programStage=="yj7nAGqKXZw")
                     {
-
+                       
 
                         evts.dataValues.map(function(dtvalues, i){
 
@@ -115,19 +116,29 @@ export const Patient = () => {
                             {
                                 //console.log(dtvalues.value);
                         mdates=dtvalues.value;
-                        datelastcontact_temp=mdates;
-                        
-                       // var pyear=mdates.substring(0,4);
-                       // var pmonth=mdates.substring(5,7);
-                       // var pdate=mdates.substring(8,10);
-                       // datelastcontact=pyear+pmonth+pdate;
-                        
+                       
+                        var tempdate=new Date(mdates);
+                        var date_of_last_contact=new Date(datelst);
+                          if(datelst!="")
+                          {
+                        var datediffernces=Math.floor((Math.abs(tempdate-date_of_last_contact))/(1000*60*60*24));
+                        if(datediffernces<0){
+                            datelst=date_of_last_contact;
+                        }
+
+                    }
+                    else
+                    {
+                        datelst= mdates;  
+                    }
+
                             }
 
-                            var datelastcontact_temp_conv=new Date(datelastcontact_temp);
-                            var datelst_conv=new Date(datelst);
-                          
-                            datelst=datelastcontact_temp;
+                           
+
+                           
+
+                        
                          
 
                     
@@ -237,12 +248,13 @@ export const Patient = () => {
                 }
                 if(itm.attribute=="mJ3oYSkDyWz")
                 {
-                afname=itm.value;
+                    
+                    lname=itm.value;
                 }
             
                 if(itm.attribute=="Uda5alDG8P5")
                 {
-                lname=itm.value;
+                    afname=itm.value;
                 }
                 if(itm.attribute=="dd98c7o6RjZ")
                 {
